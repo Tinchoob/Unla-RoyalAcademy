@@ -1,8 +1,11 @@
 package abm;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.NoRepositoryBean;
+
 import datos.Persona;
 
-public interface PersonaABM extends CrudRepository<Persona, Integer> {
+//@NoRepositoryBean
+public interface PersonaABM<T extends Persona> extends CrudRepository<T, Integer> {
 	
 }
