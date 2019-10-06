@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import abm.MateriaABM;
+import datos.Carrera;
 import datos.Materia;
 import datos.Profesor;
 
@@ -77,23 +78,13 @@ public class MateriaControlador {
 		
 	@GetMapping(path="/read")
 	public @ResponseBody List<Materia> traer(@RequestBody Materia[] materiaArr) {
-		Iterator<Profesor> itrProfesor;
 		List<Materia> lstMateria = new ArrayList<Materia>();
 		Materia m;
 		
 		for (Materia materia: materiaArr) {
 			try {
 				m = materiaABM.findById(materia.getIdMateria()).get();
-				
-				//Rutina para romper bucle infinito en muchos a muchos, accede a los objetos que contiene y les limpia
-				//las referencias que causan ese error
-				itrProfesor = m.getLstProfesor().iterator();
-				while (itrProfesor.hasNext())
-				{
-					Profesor profesor = itrProfesor.next();
-					profesor.getLstMateria().clear();
-				}
-				
+				m.limpiarReferenciasCiclicasExternas();
 				lstMateria.add(m);
 			}
 			catch (Exception e){
@@ -107,20 +98,11 @@ public class MateriaControlador {
 	@GetMapping(path="/readAll")
 	public @ResponseBody List<Materia> traerTodo() {
 		Iterable<Materia> itrMateria = materiaABM.findAll();
-		Iterator<Profesor> itrProfesor;
 		List<Materia> lstMateria = new ArrayList<Materia>();
 		
 		for (Materia materia: itrMateria) {
 			try {
-				//Rutina para romper bucle infinito en muchos a muchos, accede a los objetos que contiene y les limpia
-				//las referencias que causan ese error
-				itrProfesor = materia.getLstProfesor().iterator();
-				while (itrProfesor.hasNext())
-				{
-					Profesor profesor = itrProfesor.next();
-					profesor.getLstMateria().clear();
-				}
-				
+				materia.limpiarReferenciasCiclicasExternas();
 				lstMateria.add(materia);
 			}
 			catch (Exception e){

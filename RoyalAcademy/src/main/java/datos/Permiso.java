@@ -1,5 +1,6 @@
 package datos;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -61,6 +62,24 @@ public class Permiso {
 
 	public void setLstUsuario(Set<Usuario> lstUsuario) {
 		this.lstUsuario = lstUsuario;
+	}
+	
+	//Rutina para romper bucle infinito en la serialización
+	public void limpiarReferenciasCiclicasPropias()
+	{
+		this.getLstUsuario().clear();
+	}
+			
+	//Rutina para romper bucle infinito en la serialización
+	public void limpiarReferenciasCiclicasExternas()
+	{
+		Iterator<Usuario> itrUsuario;
+		itrUsuario = this.getLstUsuario().iterator();
+		while (itrUsuario.hasNext())
+		{
+			Usuario usuario = itrUsuario.next();
+			usuario.limpiarReferenciasCiclicasPropias();
+		}
 	}
 
 	@Override

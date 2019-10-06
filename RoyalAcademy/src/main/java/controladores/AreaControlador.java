@@ -77,23 +77,13 @@ public class AreaControlador {
 		
 	@GetMapping(path="/read")
 	public @ResponseBody List<Area> traer(@RequestBody Area[] areaArr) {
-		Iterator<Carrera> itrCarrera;
 		List<Area> lstArea = new ArrayList<Area>();
 		Area a;
 		
 		for (Area area: areaArr) {
 			try {
 				a = areaABM.findById(area.getIdArea()).get();
-				
-				//Rutina para romper bucle infinito en uno a muchos, accede a los objetos que contiene y les limpia
-				//las referencias que causan ese error
-				itrCarrera = a.getLstCarrera().iterator();
-				while (itrCarrera.hasNext())
-				{
-					Carrera carrera = itrCarrera.next();
-					carrera.setArea(null);
-				}
-				
+				a.limpiarReferenciasCiclicasExternas();
 				lstArea.add(a);
 			}
 			catch (Exception e){
@@ -107,20 +97,11 @@ public class AreaControlador {
 	@GetMapping(path="/readAll")
 	public @ResponseBody List<Area> traerTodo() {
 		Iterable<Area> itrArea = areaABM.findAll();
-		Iterator<Carrera> itrCarrera;
 		List<Area> lstArea = new ArrayList<Area>();
 		
 		for (Area area: itrArea) {
 			try {
-				//Rutina para romper bucle infinito en uno a muchos, accede a los objetos que contiene y les limpia
-				//las referencias que causan ese error
-				itrCarrera = area.getLstCarrera().iterator();
-				while (itrCarrera.hasNext())
-				{
-					Carrera carrera = itrCarrera.next();
-					carrera.setArea(null);
-				}
-				
+				area.limpiarReferenciasCiclicasExternas();
 				lstArea.add(area);
 			}
 			catch (Exception e){

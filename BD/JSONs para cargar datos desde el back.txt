@@ -1,0 +1,245 @@
+Tipo de documento:
+
+[
+	{
+		"idTipoDocumento": 0,
+		"tipo": "DNI"
+	}
+]
+
+
+Permiso:
+
+[
+    {
+        "idPermiso": 0,
+        "nombre": "root",
+        "descripcion": "Administrador de Sistema",
+        "lstUsuario": []
+    },
+    {
+        "idPermiso": 0,
+        "nombre": "AG",
+        "descripcion": "Administrador General",
+        "lstUsuario": []
+    },
+    {
+        "idPermiso": 0,
+        "nombre": "AP",
+        "descripcion": "Administrador de País",
+        "lstUsuario": []
+    },
+    {
+        "idPermiso": 0,
+        "nombre": "AS",
+        "descripcion": "Administrador de Sede",
+        "lstUsuario": []
+    }
+]
+
+
+Usuario:
+
+[
+	{
+		"idPersona" : "0",
+		"nombre" : "Pablo",
+		"apellido" : "Lopez",
+		"numeroDocumento" : "12345678",
+		"email" : "a@a.com",
+		"fechaNacimiento" : "1990-01-01",
+		"genero" : "Masculino",
+		"celular" : "1144444444",
+		"pais" : "Argentina",
+		"ciudad" : "Buenos Aires",
+		"tipoDocumento" : {
+			"idTipoDocumento" : "1",
+			"tipo" : "DNI"
+		},
+		"nombreUsuario" : "pablo",
+		"contraseña" : "1234",
+		"activo" : "",
+		"lstPermiso": [
+			{
+				"idPermiso": 1,
+				"nombre": "root",
+				"descripcion": "Administrador de Sistema",
+				"lstUsuario": []
+			}
+		]
+	},
+	{
+		"idPersona" : "0",
+		"nombre" : "Matías",
+		"apellido" : "Lizarraga",
+		"numeroDocumento" : "87654321",
+		"email" : "b@b.com",
+		"fechaNacimiento" : "1991-01-01",
+		"genero" : "Masculino",
+		"celular" : "1155555555",
+		"pais" : "Argentina",
+		"ciudad" : "Buenos Aires",
+		"tipoDocumento" : {
+			"idTipoDocumento" : "1",
+			"tipo" : "DNI"
+		},
+		"nombreUsuario" : "matias",
+		"contraseña" : "4321",
+		"activo" : "",
+		"lstPermiso": [
+			{
+				"idPermiso": 2,
+				"nombre": "AG",
+				"descripcion": "Administrador General",
+				"lstUsuario": []
+			}
+		]
+	},
+	{
+		"idPersona" : "0",
+		"nombre" : "Martín",
+		"apellido" : "Bombara",
+		"numeroDocumento" : "91011121",
+		"email" : "c@c.com",
+		"fechaNacimiento" : "1992-01-01",
+		"genero" : "Masculino",
+		"celular" : "1166666666",
+		"pais" : "Argentina",
+		"ciudad" : "Buenos Aires",
+		"tipoDocumento" : {
+			"idTipoDocumento" : "1",
+			"tipo" : "DNI"
+		},
+		"nombreUsuario" : "martin",
+		"contraseña" : "5678",
+		"activo" : "",
+		"lstPermiso": [
+			{
+				"idPermiso": 3,
+				"nombre": "AP",
+				"descripcion": "Administrador de País",
+				"lstUsuario": []
+			}
+		]
+	},
+	{
+		"idPersona" : "0",
+		"nombre" : "Giuliano",
+		"apellido" : "Bacon",
+		"numeroDocumento" : "31415161",
+		"email" : "d@d.com",
+		"fechaNacimiento" : "1993-01-01",
+		"genero" : "Masculino",
+		"celular" : "1177777777",
+		"pais" : "Argentina",
+		"ciudad" : "Buenos Aires",
+		"tipoDocumento" : {
+			"idTipoDocumento" : "1",
+			"tipo" : "DNI"
+		},
+		"nombreUsuario" : "giuliano",
+		"contraseña" : "8765",
+		"activo" : "",
+		"lstPermiso": [
+			{
+				"idPermiso": 4,
+				"nombre": "AS",
+				"descripcion": "Administrador de Sede",
+				"lstUsuario": []
+			}
+		]
+	}
+]
+
+
+Profesor:
+
+[
+	{
+		"idPersona" : "3",
+		"nombre" : "Martín",
+		"apellido" : "Bombara",
+		"numeroDocumento" : "91011121",
+		"email" : "c@c.com",
+		"fechaNacimiento" : "1992-01-01",
+		"genero" : "Masculino",
+		"celular" : "1166666666",
+		"pais" : "Argentina",
+		"ciudad" : "Buenos Aires",
+		"tipoDocumento" : {
+			"idTipoDocumento" : "1",
+			"tipo" : "DNI"
+		},
+		"lstMateria": []
+	}
+]
+
+
+Area:
+
+[
+	{
+		"idArea": 0,
+		"nombre": "Desarrollo Productivo y Tecnológico",
+		"lstCarrera": []
+	},
+	{
+		"idArea": 0,
+		"nombre": "Humanidades y Arte",
+		"lstCarrera": []
+	}
+]
+
+Carrera:
+
+[
+	{
+		"idCarrera": 0,
+		"codigo": "1111",
+		"nombre": "Licenciatura en Sistemas",
+		"area": {
+			"idArea": 1,
+			"nombre": "Desarrollo Productivo y Tecnológico",
+			"lstCarrera": []
+		},
+		"lstMateria": []
+	}
+]
+
+Materia:
+
+[
+	{
+		"idMateria": 0,
+		"nombre": "Programación de Computadoras",
+		"codigo": "8601",
+		"lstProfesor": [
+			{
+				"idPersona" : "3",
+				"nombre" : "Martín",
+				"apellido" : "Bombara",
+				"numeroDocumento" : "91011121",
+				"email" : "c@c.com",
+				"fechaNacimiento" : "1992-01-01",
+				"genero" : "Masculino",
+				"celular" : "1166666666",
+				"pais" : "Argentina",
+				"ciudad" : "Buenos Aires",
+				"tipoDocumento" : {
+					"idTipoDocumento" : "1",
+					"tipo" : "DNI"
+				},
+				"lstMateria": []
+			}
+		],
+		"lstCarrera": [
+			{
+				"idCarrera": 1,
+				"codigo": "1111",
+				"nombre": "Licenciatura en Sistemas",
+				"area": null,
+				"lstMateria": []
+			}
+		]
+	}
+]

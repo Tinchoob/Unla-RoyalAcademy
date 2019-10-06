@@ -77,23 +77,13 @@ public class UsuarioControlador {
 		
 	@GetMapping(path="/read")
 	public @ResponseBody List<Usuario> traer(@RequestBody Usuario[] usuarioArr) {
-		Iterator<Permiso> itrPermiso;
 		List<Usuario> lstUsuarios = new ArrayList<Usuario>();
 		Usuario u;
 		
 		for (Usuario usuario: usuarioArr) {
 			try {
 				u = usuarioABM.findById(usuario.getIdPersona()).get();
-				
-				//Rutina para romper bucle infinito en muchos a muchos, accede a los objetos que contiene y les limpia
-				//las referencias que causan ese error
-				itrPermiso = u.getLstPermiso().iterator();
-				while (itrPermiso.hasNext())
-				{
-					Permiso permiso = itrPermiso.next();
-					permiso.getLstUsuario().clear();
-				}
-				
+				u.limpiarReferenciasCiclicasExternas();
 				lstUsuarios.add(u);
 			}
 			catch (Exception e){
@@ -107,20 +97,11 @@ public class UsuarioControlador {
 	@GetMapping(path="/readAll")
 	public @ResponseBody List<Usuario> traerTodo() {
 		Iterable<Usuario> itrUsuario = usuarioABM.findAll();
-		Iterator<Permiso> itrPermiso;
 		List<Usuario> lstUsuarios = new ArrayList<Usuario>();
 		
 		for (Usuario usuario: itrUsuario) {
 			try {
-				//Rutina para romper bucle infinito en muchos a muchos, accede a los objetos que contiene y les limpia
-				//las referencias que causan ese error
-				itrPermiso = usuario.getLstPermiso().iterator();
-				while (itrPermiso.hasNext())
-				{
-					Permiso permiso = itrPermiso.next();
-					permiso.getLstUsuario().clear();
-				}
-				
+				usuario.limpiarReferenciasCiclicasExternas();
 				lstUsuarios.add(usuario);
 			}
 			catch (Exception e){

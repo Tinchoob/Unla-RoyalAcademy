@@ -1,6 +1,7 @@
 package datos;
 
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -66,6 +67,24 @@ public class Usuario extends Persona {
 
 	public void setLstPermiso(Set<Permiso> lstPermiso) {
 		this.lstPermiso = lstPermiso;
+	}
+	
+	//Rutina para romper bucle infinito en la serialización
+	public void limpiarReferenciasCiclicasPropias()
+	{
+		this.getLstPermiso().clear();
+	}
+		
+	//Rutina para romper bucle infinito en la serialización
+	public void limpiarReferenciasCiclicasExternas()
+	{
+		Iterator<Permiso> itrPermiso;
+		itrPermiso = this.getLstPermiso().iterator();
+		while (itrPermiso.hasNext())
+		{
+			Permiso permiso = itrPermiso.next();
+			permiso.limpiarReferenciasCiclicasPropias();
+		}
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package controladores;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import abm.CarreraABM;
 import datos.Carrera;
+import datos.Materia;
 
 @Controller
 @RequestMapping(path="/Carrera")
@@ -81,10 +83,7 @@ public class CarreraControlador {
 		for (Carrera carrera: carreraArr) {
 			try {
 				c = carreraABM.findById(carrera.getIdCarrera()).get();
-				
-				//Rutina para romper bucle infinito en muchos a uno, accede a los objetos que contiene y les limpia
-				//las referencias que causan ese error
-				c.getArea().getLstCarrera().clear();
+				c.limpiarReferenciasCiclicasExternas();
 				lstCarrera.add(c);
 			}
 			catch (Exception e){
@@ -102,9 +101,7 @@ public class CarreraControlador {
 		
 		for (Carrera carrera: itrCarrera) {
 			try {
-				//Rutina para romper bucle infinito en muchos a uno, accede a los objetos que contiene y les limpia
-				//las referencias que causan ese error
-				carrera.getArea().getLstCarrera().clear();
+				carrera.limpiarReferenciasCiclicasExternas();
 				lstCarrera.add(carrera);
 			}
 			catch (Exception e){

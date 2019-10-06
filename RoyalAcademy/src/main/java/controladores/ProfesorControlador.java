@@ -77,23 +77,13 @@ public class ProfesorControlador {
 		
 	@GetMapping(path="/read")
 	public @ResponseBody List<Profesor> traer(@RequestBody Profesor[] profesorArr) {
-		Iterator<Materia> itrMateria;
 		List<Profesor> lstProfesor = new ArrayList<Profesor>();
 		Profesor p;
 		
 		for (Profesor profesor: profesorArr) {
 			try {
 				p = profesorABM.findById(profesor.getIdPersona()).get();
-				
-				//Rutina para romper bucle infinito en muchos a muchos, accede a los objetos que contiene y les limpia
-				//las referencias que causan ese error
-				itrMateria = p.getLstMateria().iterator();
-				while (itrMateria.hasNext())
-				{
-					Materia materia = itrMateria.next();
-					materia.getLstProfesor().clear();
-				}
-				
+				p.limpiarReferenciasCiclicasExternas();
 				lstProfesor.add(p);
 			}
 			catch (Exception e){
@@ -107,20 +97,11 @@ public class ProfesorControlador {
 	@GetMapping(path="/readAll")
 	public @ResponseBody List<Profesor> traerTodo() {
 		Iterable<Profesor> itrProfesor = profesorABM.findAll();
-		Iterator<Materia> itrMateria;
 		List<Profesor> lstProfesor = new ArrayList<Profesor>();
 		
 		for (Profesor profesor: itrProfesor) {
 			try {
-				//Rutina para romper bucle infinito en muchos a muchos, accede a los objetos que contiene y les limpia
-				//las referencias que causan ese error
-				itrMateria = profesor.getLstMateria().iterator();
-				while (itrMateria.hasNext())
-				{
-					Materia materia = itrMateria.next();
-					materia.getLstProfesor().clear();
-				}
-				
+				profesor.limpiarReferenciasCiclicasExternas();
 				lstProfesor.add(profesor);
 			}
 			catch (Exception e){

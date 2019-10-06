@@ -1,5 +1,6 @@
 package datos;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -48,6 +49,25 @@ public class Area {
 
 	public void setLstCarrera(Set<Carrera> lstCarrera) {
 		this.lstCarrera = lstCarrera;
+	}
+	
+	//Rutina para romper bucle infinito en la serialización
+	public void limpiarReferenciasCiclicasPropias()
+	{
+		this.getLstCarrera().clear();
+	}
+	
+	//Rutina para romper bucle infinito en la serialización
+	public void limpiarReferenciasCiclicasExternas()
+	{
+		Iterator<Carrera> itrCarrera;
+		
+		itrCarrera = this.getLstCarrera().iterator();
+		while (itrCarrera.hasNext())
+		{
+			Carrera carrera = itrCarrera.next();
+			carrera.limpiarReferenciasCiclicasPropias();
+		}
 	}
 
 	@Override
