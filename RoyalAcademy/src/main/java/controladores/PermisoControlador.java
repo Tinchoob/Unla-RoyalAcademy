@@ -29,6 +29,7 @@ public class PermisoControlador {
 		
 		for (Permiso permiso: permisoArr) {
 			try {
+				permiso.setIdPermiso(0);         //Para evitar que sobreescriba si se le manda algo con ID
 				permisoABM.save(permiso);
 				lstPermisoAgregado.add(permiso);
 			}

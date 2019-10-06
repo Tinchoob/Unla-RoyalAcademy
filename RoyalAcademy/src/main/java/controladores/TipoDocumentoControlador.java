@@ -26,6 +26,7 @@ public class TipoDocumentoControlador {
 		
 		for (TipoDocumento tipoDocumento: tipoDocumentoArr) {
 			try {
+				tipoDocumento.setIdTipoDocumento(0);         //Para evitar que sobreescriba si se le manda algo con ID
 				tipoDocumentoABM.save(tipoDocumento);
 				lstTipoDocumentoAgregado.add(tipoDocumento);
 			}

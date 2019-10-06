@@ -29,6 +29,7 @@ public class UsuarioControlador {
 		
 		for (Usuario usuario: usuarioArr) {
 			try {
+				usuario.setIdPersona(0);         //Para evitar que sobreescriba si se le manda algo con ID
 				usuarioABM.save(usuario);
 				lstUsuariosAgregados.add(usuario);
 			}

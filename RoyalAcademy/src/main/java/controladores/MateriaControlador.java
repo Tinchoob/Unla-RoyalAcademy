@@ -29,6 +29,7 @@ public class MateriaControlador {
 		
 		for (Materia materia: materiaArr) {
 			try {
+				materia.setIdMateria(0);         //Para evitar que sobreescriba si se le manda algo con ID
 				materiaABM.save(materia);
 				lstMateriaAgregada.add(materia);
 			}
