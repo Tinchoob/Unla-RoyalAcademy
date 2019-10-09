@@ -60,9 +60,8 @@ public class Area {
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasExternas()
 	{
-		Iterator<Carrera> itrCarrera;
+		Iterator<Carrera> itrCarrera = this.getLstCarrera().iterator();
 		
-		itrCarrera = this.getLstCarrera().iterator();
 		while (itrCarrera.hasNext())
 		{
 			Carrera carrera = itrCarrera.next();

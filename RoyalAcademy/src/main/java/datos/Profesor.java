@@ -16,7 +16,7 @@ public class Profesor extends Persona {
 	
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
 						   fetch = FetchType.LAZY, mappedBy = "lstProfesor")
-	private Set<Materia> lstMateria;
+	private Set<Cursada> lstCursada;
 
 	public Profesor(Integer idPersona, String nombre, String apellido, String numeroDocumento, String email,
 			GregorianCalendar fechaNacimiento, String genero, String celular, String pais, String ciudad,
@@ -26,36 +26,35 @@ public class Profesor extends Persona {
 	}
 
 	public Profesor() {}
-
-	public Set<Materia> getLstMateria() {
-		return lstMateria;
-	}
-
-	public void setLstMateria(Set<Materia> lstMateria) {
-		this.lstMateria = lstMateria;
-	}
 	
+	public Set<Cursada> getLstCursada() {
+		return lstCursada;
+	}
+
+	public void setLstCursada(Set<Cursada> lstCursada) {
+		this.lstCursada = lstCursada;
+	}
+
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasPropias()
 	{
-		this.getLstMateria().clear();
+		this.getLstCursada().clear();
 	}
 	
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasExternas()
 	{
-		Iterator<Materia> itrMateria;
+		Iterator<Cursada> itrCursada = this.getLstCursada().iterator();
 		
-		itrMateria = this.getLstMateria().iterator();
-		while (itrMateria.hasNext())
+		while (itrCursada.hasNext())
 		{
-			Materia materia = itrMateria.next();
-			materia.limpiarReferenciasCiclicasPropias();
+			Cursada cursada = itrCursada.next();
+			cursada.limpiarReferenciasCiclicasPropias();
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "Profesor [lstMateria=" + lstMateria + "]";
+		return "Profesor [lstCursada=" + lstCursada + "]";
 	}
 }

@@ -213,7 +213,33 @@ Materia:
 		"idMateria": 0,
 		"nombre": "Programación de Computadoras",
 		"codigo": "8601",
-		"lstProfesor": [
+		"lstCarrera": [
+			{
+				"idCarrera": 1,
+				"codigo": "1111",
+				"nombre": "Licenciatura en Sistemas",
+				"area": null,
+				"lstMateria": []
+			}
+		],
+		"lstCursada" : []
+	}
+]
+
+Cursada:
+
+[
+	{
+		"idCursada": 0,
+		"codigo" : "8601-1",
+		"materia" : {
+			"idMateria": 1,
+			"nombre": "Programación de Computadoras",
+			"codigo": "8601",
+			"lstCarrera": [],
+			"lstCursada" : []
+		},
+		"lstProfesor" : [
 			{
 				"idPersona" : "3",
 				"nombre" : "Martín",
@@ -231,15 +257,16 @@ Materia:
 				},
 				"lstMateria": []
 			}
-		],
-		"lstCarrera": [
-			{
-				"idCarrera": 1,
-				"codigo": "1111",
-				"nombre": "Licenciatura en Sistemas",
-				"area": null,
-				"lstMateria": []
-			}
 		]
+	}
+]
+
+Turno:
+
+[
+	{
+		"idTurno": 0,
+		"fechaHoraInicio" : "2019-10-09T10:30:00.000+0000",
+		"fechaHoraFin" : "2019-10-09T14:30:00.000+0000"
 	}
 ]

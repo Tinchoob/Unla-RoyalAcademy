@@ -91,10 +91,9 @@ public class Carrera {
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasExternas()
 	{
-		this.getArea().limpiarReferenciasCiclicasPropias();
+		Iterator<Materia> itrMateria = this.getLstMateria().iterator();
 		
-		Iterator<Materia> itrMateria;
-		itrMateria = this.getLstMateria().iterator();
+		this.getArea().limpiarReferenciasCiclicasPropias();
 		while (itrMateria.hasNext())
 		{
 			Materia materia = itrMateria.next();

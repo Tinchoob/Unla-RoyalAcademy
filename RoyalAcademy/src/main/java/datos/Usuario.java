@@ -78,8 +78,8 @@ public class Usuario extends Persona {
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasExternas()
 	{
-		Iterator<Permiso> itrPermiso;
-		itrPermiso = this.getLstPermiso().iterator();
+		Iterator<Permiso> itrPermiso = this.getLstPermiso().iterator();
+		
 		while (itrPermiso.hasNext())
 		{
 			Permiso permiso = itrPermiso.next();

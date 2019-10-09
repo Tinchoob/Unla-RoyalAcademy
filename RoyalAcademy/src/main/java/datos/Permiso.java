@@ -73,8 +73,8 @@ public class Permiso {
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasExternas()
 	{
-		Iterator<Usuario> itrUsuario;
-		itrUsuario = this.getLstUsuario().iterator();
+		Iterator<Usuario> itrUsuario = this.getLstUsuario().iterator();
+		
 		while (itrUsuario.hasNext())
 		{
 			Usuario usuario = itrUsuario.next();
