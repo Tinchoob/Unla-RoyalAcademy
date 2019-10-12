@@ -24,13 +24,13 @@ public class PreguntaMCControlador {
 	
 	@PostMapping(path="/add")
 	public @ResponseBody List<PreguntaMC> alta(@RequestBody PreguntaMC[] preguntaMCArr) {
-		int result = 0;
 		List<PreguntaMC> lstPreguntaMCAgregada = new ArrayList<PreguntaMC>();
 		
 		for (PreguntaMC preguntaMC: preguntaMCArr) {
 			try {
-				result = preguntaMCABM.registerAsPreguntaMC(preguntaMC.getIdPregunta());
-				if (result == 1) lstPreguntaMCAgregada.add(preguntaMC);
+				preguntaMC.setIdPregunta(0);           //Para evitar que sobreescriba si se le manda algo con ID
+				preguntaMCABM.save(preguntaMC);
+				lstPreguntaMCAgregada.add(preguntaMC);
 			}
 			catch (Exception e){
 				e.printStackTrace();

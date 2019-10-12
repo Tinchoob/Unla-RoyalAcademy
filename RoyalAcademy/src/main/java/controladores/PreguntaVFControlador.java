@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import abm.PreguntaVFABM;
 import datos.PreguntaVF;
 
-
 @Controller
 @RequestMapping(path="/PreguntaVF")
 public class PreguntaVFControlador {
@@ -24,13 +23,13 @@ public class PreguntaVFControlador {
 	
 	@PostMapping(path="/add")
 	public @ResponseBody List<PreguntaVF> alta(@RequestBody PreguntaVF[] preguntaVFArr) {
-		int result = 0;
 		List<PreguntaVF> lstPreguntaVFAgregada = new ArrayList<PreguntaVF>();
 		
 		for (PreguntaVF preguntaVF: preguntaVFArr) {
 			try {
-				result = preguntaVFABM.registerAsPreguntaVF(preguntaVF.getIdPregunta());
-				if (result == 1) lstPreguntaVFAgregada.add(preguntaVF);
+				preguntaVF.setIdPregunta(0);           //Para evitar que sobreescriba si se le manda algo con ID
+				preguntaVFABM.save(preguntaVF);
+				lstPreguntaVFAgregada.add(preguntaVF);
 			}
 			catch (Exception e){
 				e.printStackTrace();

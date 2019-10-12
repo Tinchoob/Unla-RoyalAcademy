@@ -22,8 +22,9 @@ public class Turno {
 	private GregorianCalendar fechaHoraFin;
 	
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
-			   fetch = FetchType.LAZY, mappedBy = "idTurno")
+			   fetch = FetchType.LAZY, mappedBy = "turno")
 	private Set<Examen> lstExamen;
+	
 	
 	public Turno(int idTurno, GregorianCalendar fechaHoraInicio, GregorianCalendar fechaHoraFin) {
 		super();
@@ -58,21 +59,34 @@ public class Turno {
 		this.fechaHoraFin = fechaHoraFin;
 	}
 	
+	public Set<Examen> getLstExamen() {
+		return lstExamen;
+	}
+
+	public void setLstExamen(Set<Examen> lstExamen) {
+		this.lstExamen = lstExamen;
+	}
+
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasPropias()
 	{
-		
+		this.getLstExamen().clear();
 	}
 	
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasExternas()
 	{
+		Iterator<Examen> itrExamen = this.getLstExamen().iterator();
 		
+		while (itrExamen.hasNext()) {
+			Examen examen = itrExamen.next();
+			examen.limpiarReferenciasCiclicasPropias();
+		}
 	}
 
 	@Override
 	public String toString() {
 		return "Turno [idTurno=" + idTurno + ", fechaHoraInicio=" + fechaHoraInicio + ", fechaHoraFin=" + fechaHoraFin
-				+ "]";
+				+ ", lstExamen=" + lstExamen + "]";
 	}
 }

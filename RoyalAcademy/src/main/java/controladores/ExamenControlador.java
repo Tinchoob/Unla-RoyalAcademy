@@ -23,69 +23,69 @@ public class ExamenControlador {
 	
 	@PostMapping(path="/add")
 	public @ResponseBody List<Examen> alta(@RequestBody Examen[] examenArr) {
-		List<Examen> lstExamenAgregada = new ArrayList<Examen>();
+		List<Examen> lstExamenAgregado = new ArrayList<Examen>();
 		
 		for (Examen examen: examenArr) {
 			try {
-				        //Para evitar que sobreescriba si se le manda algo con ID
+				examen.setIdExamen(0);         //Para evitar que sobreescriba si se le manda algo con ID
 				examenABM.save(examen);
-				lstExamenAgregada.add(examen);
+				lstExamenAgregado.add(examen);
 			}
-			catch (Exception e){
-				e.printStackTrace();
+			catch (Exception excp){
+				excp.printStackTrace();
 			}
 		}
 		
-		return lstExamenAgregada;
+		return lstExamenAgregado;
 	}
 	
 	@PostMapping(path="/delete")
 	public @ResponseBody List<Examen> baja(@RequestBody Examen[] examenArr) {
-		List<Examen> lstExamenEliminada = new ArrayList<Examen>();
+		List<Examen> lstExamenEliminado = new ArrayList<Examen>();
 		
 		for (Examen examen: examenArr) {
 			try {
 				examenABM.delete(examen);
-				lstExamenEliminada.add(examen);
+				lstExamenEliminado.add(examen);
 			}
-			catch (Exception e){
-				e.printStackTrace();
+			catch (Exception excp){
+				excp.printStackTrace();
 			}
 		}
 		
-		return lstExamenEliminada;
+		return lstExamenEliminado;
 	}
 	
 	@PostMapping(path="/update")
 	public @ResponseBody List<Examen> modificacion(@RequestBody Examen[] examenArr) {
-		List<Examen> lstExamenActualizada = new ArrayList<Examen>();
+		List<Examen> lstExamenActualizado = new ArrayList<Examen>();
 		
 		for (Examen examen: examenArr) {
 			try {
 				examenABM.save(examen);
-				lstExamenActualizada.add(examen);
+				lstExamenActualizado.add(examen);
 			}
-			catch (Exception e){
-				e.printStackTrace();
+			catch (Exception excp){
+				excp.printStackTrace();
 			}
 		}
 		
-		return lstExamenActualizada;
+		return lstExamenActualizado;
 	}
 		
 	@GetMapping(path="/read")
 	public @ResponseBody List<Examen> traer(@RequestBody Examen[] examenArr) {
 		List<Examen> lstExamen = new ArrayList<Examen>();
-		Examen ex;
+		Examen e;
 		
 		for (Examen examen: examenArr) {
 			try {
-//				ex = examenABM.findById(examen.getId()).get();
-//				ex.limpiarReferenciasCiclicasExternas();
-//				lstExamen.add(ex);
+				e = examenABM.findById(examen.getIdExamen()).get();
+				e.limpiarReferenciasCiclicasExternas();
+				lstExamen.add(e);
 			}
-			catch (Exception e){
-				e.printStackTrace();
+			catch (Exception excp){
+				excp.printStackTrace();
 			}
 		}
 		
@@ -102,8 +102,8 @@ public class ExamenControlador {
 				examen.limpiarReferenciasCiclicasExternas();
 				lstExamen.add(examen);
 			}
-			catch (Exception e){
-				e.printStackTrace();
+			catch (Exception excp){
+				excp.printStackTrace();
 			}
 		}
 		

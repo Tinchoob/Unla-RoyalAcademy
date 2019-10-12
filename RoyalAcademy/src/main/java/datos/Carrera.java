@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -30,6 +29,10 @@ public class Carrera {
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
 				fetch = FetchType.LAZY, mappedBy = "lstCarrera")
 	private Set<Materia> lstMateria;
+	
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
+				fetch = FetchType.LAZY, mappedBy = "lstCarrera")
+	private Set<Alumno> lstAlumno;
 
 	public Carrera(int idCarrera, String codigo, String nombre, Area area) {
 		super();
@@ -81,17 +84,27 @@ public class Carrera {
 		this.lstMateria = lstMateria;
 	}
 	
+	public Set<Alumno> getLstAlumno() {
+		return lstAlumno;
+	}
+
+	public void setLstAlumno(Set<Alumno> lstAlumno) {
+		this.lstAlumno = lstAlumno;
+	}
+
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasPropias()
 	{
 		this.setArea(null);
 		this.getLstMateria().clear();
+		this.getLstAlumno().clear();
 	}
 	
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasExternas()
 	{
 		Iterator<Materia> itrMateria = this.getLstMateria().iterator();
+		Iterator<Alumno> itrAlumno = this.getLstAlumno().iterator();
 		
 		this.getArea().limpiarReferenciasCiclicasPropias();
 		while (itrMateria.hasNext())
@@ -99,11 +112,16 @@ public class Carrera {
 			Materia materia = itrMateria.next();
 			materia.limpiarReferenciasCiclicasPropias();
 		}
+		while (itrAlumno.hasNext())
+		{
+			Alumno alumno = itrAlumno.next();
+			alumno.limpiarReferenciasCiclicasPropias();
+		}
 	}
 
 	@Override
 	public String toString() {
 		return "Carrera [idCarrera=" + idCarrera + ", codigo=" + codigo + ", nombre=" + nombre + ", area=" + area
-				+ ", lstMateria=" + lstMateria + "]";
+				+ ", lstMateria=" + lstMateria + ", lstAlumno=" + lstAlumno + "]";
 	}
 }

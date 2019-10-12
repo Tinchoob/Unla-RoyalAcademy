@@ -5,7 +5,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 import datos.Persona;
 
-//@NoRepositoryBean
+@NoRepositoryBean
 public interface PersonaABM<T extends Persona> extends CrudRepository<T, Integer> {
 	
 }

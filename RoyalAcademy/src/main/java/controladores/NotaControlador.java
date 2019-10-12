@@ -27,7 +27,6 @@ public class NotaControlador {
 		
 		for (Nota nota: notaArr) {
 			try {
-				        //Para evitar que sobreescriba si se le manda algo con ID
 				notaABM.save(nota);
 				lstNotaAgregada.add(nota);
 			}
@@ -80,9 +79,9 @@ public class NotaControlador {
 		
 		for (Nota nota: notaArr) {
 			try {
-//				n = notaABM.findById(nota.getId()).get();
-//				n.limpiarReferenciasCiclicasExternas();
-//				lstNota.add(n);
+				n = notaABM.findById(nota.getId()).get();
+				n.limpiarReferenciasCiclicasExternas();
+				lstNota.add(n);
 			}
 			catch (Exception e){
 				e.printStackTrace();

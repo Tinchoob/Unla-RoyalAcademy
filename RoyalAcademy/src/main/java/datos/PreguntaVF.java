@@ -1,58 +1,55 @@
 package datos;
 
 import java.util.Iterator;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "idPregunta")
-
-public class PreguntaVF extends Pregunta{
+public class PreguntaVF extends Pregunta {
 
 	private boolean valorCorrecto;
 
+	public PreguntaVF() {}
 	
-	public PreguntaVF() {
+	public PreguntaVF(boolean valorCorrecto) {
 		super();
+		this.valorCorrecto = valorCorrecto;
 	}
-
-
-
-	public PreguntaVF(int idPregunta, String pregunta) {
-		super(idPregunta, pregunta);
-		
-	}
-
-
+	
 	public boolean isValorCorrecto() {
 		return valorCorrecto;
 	}
-
+	
 	public void setValorCorrecto(boolean valorCorrecto) {
 		this.valorCorrecto = valorCorrecto;
 	}
-
-
-
-	@Override
-	public String toString() {
-		return "PreguntaVF [valorCorrecto=" + valorCorrecto + ", getIdPregunta()=" + getIdPregunta()
-				+ ", getPregunta()=" + getPregunta() + "]";
+	
+	//Rutina para romper bucle infinito en la serialización
+	public void limpiarReferenciasCiclicasPropias() {
+		this.getLstExamen().clear();
+	}
+	
+	//Rutina para romper bucle infinito en la serialización
+	public void limpiarReferenciasCiclicasPropias(boolean mantenerRespuestas) {
+		this.limpiarReferenciasCiclicasPropias();
 	}
 
+	//Rutina para romper bucle infinito en la serialización
+	public void limpiarReferenciasCiclicasExternas() {
+		Iterator<Examen> itrExamen = this.getLstExamen().iterator();
+
+		while (itrExamen.hasNext())
+		{
+			Examen examen = itrExamen.next();
+			examen.limpiarReferenciasCiclicasPropias();
+		}
+	}
 	
-
-
-
+	@Override
+	public String toString() {
+		return "PreguntaVF [getIdPregunta()=" + getIdPregunta() + ", getPregunta()=" + getPregunta()
+				+ ", valorCorrecto=" + valorCorrecto + "]";
+	}
 }

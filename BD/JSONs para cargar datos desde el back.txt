@@ -170,7 +170,7 @@ Profesor:
 			"idTipoDocumento" : "1",
 			"tipo" : "DNI"
 		},
-		"lstMateria": []
+		"lstCursada": []
 	}
 ]
 
@@ -190,6 +190,7 @@ Area:
 	}
 ]
 
+
 Carrera:
 
 [
@@ -202,9 +203,11 @@ Carrera:
 			"nombre": "Desarrollo Productivo y Tecnológico",
 			"lstCarrera": []
 		},
-		"lstMateria": []
+		"lstMateria": [],
+		"lstAlumno" : []
 	}
 ]
+
 
 Materia:
 
@@ -225,6 +228,7 @@ Materia:
 		"lstCursada" : []
 	}
 ]
+
 
 Cursada:
 
@@ -257,9 +261,12 @@ Cursada:
 				},
 				"lstMateria": []
 			}
-		]
+		],
+		"lstAlumno" : [],
+		"lstExamen" : []
 	}
 ]
+
 
 Turno:
 
@@ -267,6 +274,165 @@ Turno:
 	{
 		"idTurno": 0,
 		"fechaHoraInicio" : "2019-10-09T10:30:00.000+0000",
-		"fechaHoraFin" : "2019-10-09T14:30:00.000+0000"
+		"fechaHoraFin" : "2019-10-09T14:30:00.000+0000",
+		"lstExamen" : []
+	}
+]
+
+
+Alumno:
+
+[
+	{
+		"idPersona" : "4",
+		"nombre" : "Giuliano",
+		"apellido" : "Bacon",
+		"numeroDocumento" : "31415161",
+		"email" : "d@d.com",
+		"fechaNacimiento" : "1993-01-01",
+		"genero" : "Masculino",
+		"celular" : "1177777777",
+		"pais" : "Argentina",
+		"ciudad" : "Buenos Aires",
+		"tipoDocumento" : {
+			"idTipoDocumento" : "1",
+			"tipo" : "DNI"
+		},
+		"lstCursada" : [],
+		"lstNota" : [],
+		"lstCarrera": []
+	}
+]
+
+
+PreguntaVF:
+
+[
+	{
+		"idPregunta" : "0",
+		"pregunta" : "Un algoritmo de Fibonacci puede iniciarse en 0",
+		"lstExamen" : [],
+		"valorCorrecto" : false
+	}
+]
+
+
+PreguntaMC:
+
+[
+	{
+		"type": "datos.PreguntaMC",
+		"idPregunta" : "0",
+		"pregunta" : "Que hace un microprocesador?",
+		"lstExamen" : [],
+		"valorCorrecto" : "3",
+		"lstRespuestaMC" : []
+	}
+]
+
+
+RespuestaMC:
+
+[
+	{
+		"idRespuestaMC" : "0",
+		"respuesta" : "Hace calculos matemáticos",
+		"lstPreguntaMC" : []
+	},
+	{
+		"idRespuestaMC" : "0",
+		"respuesta" : "Realiza operaciones lógicas",
+		"lstPreguntaMC" : []
+	},
+	{
+		"idRespuestaMC" : "0",
+		"respuesta" : "Procesa",
+		"lstPreguntaMC" : []
+	}
+]
+
+
+Examen:
+
+[
+	{
+		"idExamen" : "0",
+		"cursada" : {
+			"idCursada": 1,
+			"codigo" : "8601-1",
+			"materia" : null,
+			"lstProfesor" : [],
+			"lstAlumno" : [],
+			"lstExamen" : []
+		},
+		"turno" : {
+			"idTurno": 1,
+			"fechaHoraInicio" : "2019-10-09T10:30:00.000+0000",
+			"fechaHoraFin" : "2019-10-09T14:30:00.000+0000",
+			"lstExamen" : []
+		},
+		"lstNota" : [],
+		"lstPregunta" : [
+			{
+				"type": "datos.PreguntaVF",
+				"idPregunta" : "1",
+				"pregunta" : "Un algoritmo de Fibonacci puede iniciarse en 0",
+				"lstExamen" : [],
+				"valorCorrecto" : false
+			}
+		]
+	}
+]
+
+
+Nota:
+
+[
+	{
+		"nota" : "10",
+		"examen": {
+			"idExamen": 2,
+			"cursada": {
+				"idCursada": 1,
+				"codigo": "8601-1",
+				"materia": {
+					"idMateria": 1,
+					"nombre": "Programación de Computadoras",
+					"codigo": "8601",
+					"lstCarrera": [],
+					"lstCursada": []
+				},
+				"lstProfesor": [],
+				"lstAlumno": [],
+				"lstExamen": []
+			},
+			"turno": {
+				"idTurno": 2,
+				"fechaHoraInicio": "2019-10-09T13:30:00.000+0000",
+				"fechaHoraFin": "2019-10-09T17:30:00.000+0000",
+				"lstExamen": []
+			},
+			"lstNota": [],
+			"lstPregunta": []
+		},
+		"alumno" : {
+			"idPersona": 4,
+			"nombre": "Giuliano",
+			"apellido": "Bacon",
+			"numeroDocumento": "31415161",
+			"email": "d@d.com",
+			"fechaNacimiento": "1993-01-01T03:00:00.000+0000",
+			"genero": "Masculino",
+			"celular": "1177777777",
+			"pais": "Argentina",
+			"ciudad": "Buenos Aires",
+			"tipoDocumento": {
+				"idTipoDocumento": 1,
+				"tipo": "DNI"
+			},
+			"lstCursada": [],
+			"lstNota": [],
+			"lstCarrera": []
+		}
 	}
 ]

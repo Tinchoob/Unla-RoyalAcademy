@@ -23,16 +23,10 @@ public class Cursada {
 	private int idCursada;
 	private String codigo;
 	
-	
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
-			   fetch = FetchType.LAZY, mappedBy = "cursada")
-	private Set<Examen> lstExamen;
-	
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
 			   fetch = FetchType.EAGER)
 	@JoinColumn(name = "idMateria")
 	private Materia materia;
-	
 	
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
 				fetch = FetchType.LAZY)
@@ -41,7 +35,6 @@ public class Cursada {
 	inverseJoinColumns = { @JoinColumn(name = "idPersona") })
 	private Set<Profesor> lstProfesor;
 	
-	
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
 			fetch = FetchType.LAZY)
 	@JoinTable(name ="AlumnoCursada",
@@ -49,9 +42,10 @@ public class Cursada {
 	inverseJoinColumns = { @JoinColumn(name = "idPersona") })
 	private Set<Alumno> lstAlumno;
 
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
+			   fetch = FetchType.LAZY, mappedBy = "cursada")
+	private Set<Examen> lstExamen;
 	
-			
-			
 	
 	public Cursada(int idCursada, String codigo, Materia materia) {
 		super();
@@ -61,7 +55,7 @@ public class Cursada {
 	}
 
 	public Cursada() {}
-
+	
 	public int getIdCursada() {
 		return idCursada;
 	}
@@ -85,22 +79,6 @@ public class Cursada {
 	public void setMateria(Materia materia) {
 		this.materia = materia;
 	}
-	
-	public Set<Examen> getLstExamen() {
-		return lstExamen;
-	}
-
-	public void setLstExamen(Set<Examen> lstExamen) {
-		this.lstExamen = lstExamen;
-	}
-	
-	public Set<Alumno> getLstAlumno() {
-		return lstAlumno;
-	}
-
-	public void setLstAlumno(Set<Alumno> lstAlumno) {
-		this.lstAlumno = lstAlumno;
-	}
 
 	public Set<Profesor> getLstProfesor() {
 		return lstProfesor;
@@ -110,8 +88,22 @@ public class Cursada {
 		this.lstProfesor = lstProfesor;
 	}
 
-	
-	
+	public Set<Alumno> getLstAlumno() {
+		return lstAlumno;
+	}
+
+	public void setLstAlumno(Set<Alumno> lstAlumno) {
+		this.lstAlumno = lstAlumno;
+	}
+
+	public Set<Examen> getLstExamen() {
+		return lstExamen;
+	}
+
+	public void setLstExamen(Set<Examen> lstExamen) {
+		this.lstExamen = lstExamen;
+	}
+
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasPropias()
 	{
@@ -121,15 +113,13 @@ public class Cursada {
 		this.getLstExamen().clear();
 	
 	}
-		
-	
-
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasExternas()
 	{
 		Iterator<Profesor> itrProfesor = this.getLstProfesor().iterator();
 		Iterator<Alumno> itrAlumno = this.getLstAlumno().iterator();
 		Iterator<Examen> itrExamen = this.getLstExamen().iterator();
+		
 		this.getMateria().limpiarReferenciasCiclicasPropias();
 		while (itrProfesor.hasNext())
 		{
@@ -151,6 +141,6 @@ public class Cursada {
 	@Override
 	public String toString() {
 		return "Cursada [idCursada=" + idCursada + ", codigo=" + codigo + ", materia=" + materia + ", lstProfesor="
-				+ lstProfesor + "]";
+				+ lstProfesor + ", lstAlumno=" + lstAlumno + ", lstExamen=" + lstExamen + "]";
 	}
 }

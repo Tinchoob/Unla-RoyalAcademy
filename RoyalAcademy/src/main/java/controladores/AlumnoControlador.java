@@ -1,7 +1,6 @@
 package controladores;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import abm.AlumnoABM;
 import datos.Alumno;
-import datos.Carrera;
 
 @Controller
 @RequestMapping(path="/Alumno")
@@ -26,53 +24,53 @@ public class AlumnoControlador {
 	@PostMapping(path="/add")
 	public @ResponseBody List<Alumno> alta(@RequestBody Alumno[] alumnoArr) {
 		int result = 0;
-		List<Alumno> lstAlumnoAgregada = new ArrayList<Alumno>();
+		List<Alumno> lstAlumnoAgregado = new ArrayList<Alumno>();
 		
 		for (Alumno alumno: alumnoArr) {
 			try {
 				result = alumnoABM.registerAsAlumno(alumno.getIdPersona());
-				if (result == 1) lstAlumnoAgregada.add(alumno);
+				if (result == 1) lstAlumnoAgregado.add(alumno);
 			}
 			catch (Exception e){
 				e.printStackTrace();
 			}
 		}
 		
-		return lstAlumnoAgregada;
+		return lstAlumnoAgregado;
 	}
 	
 	@PostMapping(path="/delete")
 	public @ResponseBody List<Alumno> baja(@RequestBody Alumno[] alumnoArr) {
-		List<Alumno> lstAlumnoEliminada = new ArrayList<Alumno>();
+		List<Alumno> lstAlumnoEliminado = new ArrayList<Alumno>();
 		
 		for (Alumno alumno: alumnoArr) {
 			try {
 				alumnoABM.delete(alumno);
-				lstAlumnoEliminada.add(alumno);
+				lstAlumnoEliminado.add(alumno);
 			}
 			catch (Exception e){
 				e.printStackTrace();
 			}
 		}
 		
-		return lstAlumnoEliminada;
+		return lstAlumnoEliminado;
 	}
 	
 	@PostMapping(path="/update")
 	public @ResponseBody List<Alumno> modificacion(@RequestBody Alumno[] alumnoArr) {
-		List<Alumno> lstAlumnoActualizada = new ArrayList<Alumno>();
+		List<Alumno> lstAlumnoActualizado = new ArrayList<Alumno>();
 		
 		for (Alumno alumno: alumnoArr) {
 			try {
 				alumnoABM.save(alumno);
-				lstAlumnoActualizada.add(alumno);
+				lstAlumnoActualizado.add(alumno);
 			}
 			catch (Exception e){
 				e.printStackTrace();
 			}
 		}
 		
-		return lstAlumnoActualizada;
+		return lstAlumnoActualizado;
 	}
 		
 	@GetMapping(path="/read")

@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -14,18 +16,19 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
 @PrimaryKeyJoinColumn(name = "idPersona")
 public class Alumno extends Persona {
-	
-	@OneToMany(mappedBy = "Alumno")
-    private Set<Nota> lstNota;
-	
-	
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
 						   fetch = FetchType.LAZY, mappedBy = "lstAlumno")
-	
-	private Set<Carrera> lstCarrera;
 	private Set<Cursada> lstCursada;
-	private Set<Examen> lstExamen;
 	
+	@OneToMany(mappedBy = "alumno")
+    private Set<Nota> lstNota;
+	
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
+			   fetch = FetchType.LAZY)
+	@JoinTable(name = "AlumnoCarrera",
+	joinColumns = { @JoinColumn(name = "idPersona") },
+	inverseJoinColumns = { @JoinColumn(name = "idCarrera") })
+	private Set<Carrera> lstCarrera;
 
 	public Alumno(Integer idPersona, String nombre, String apellido, String numeroDocumento, String email,
 			GregorianCalendar fechaNacimiento, String genero, String celular, String pais, String ciudad,
@@ -35,8 +38,6 @@ public class Alumno extends Persona {
 	}
 
 	public Alumno() {}
-	
-	
 	
 	public Set<Nota> getLstNota() {
 		return lstNota;
@@ -57,7 +58,6 @@ public class Alumno extends Persona {
 	public void setLstCursada(Set<Cursada> lstCursada) {
 		this.lstCursada = lstCursada;
 	}
-
 	
 	public Set<Carrera> getLstCarrera() {
 		return lstCarrera;
@@ -66,35 +66,21 @@ public class Alumno extends Persona {
 	public void setLstCarrera(Set<Carrera> lstCarrera) {
 		this.lstCarrera = lstCarrera;
 	}
-
-	public Set<Examen> getLstExamen() {
-		return lstExamen;
-	}
-
-	public void setLstExamen(Set<Examen> lstExamen) {
-		this.lstExamen = lstExamen;
-	}
 	
 	//Rutina para romper bucle infinito en la serialización
-		public void limpiarReferenciasCiclicasPropias()
-		{
-			this.getLstCarrera().clear();
-			this.getLstCursada().clear();
-			this.getLstExamen().clear();
-			this.getLstNota().clear();
-		
-		}
-		
-		
+	public void limpiarReferenciasCiclicasPropias()
+	{
+		this.getLstCursada().clear();
+		this.getLstNota().clear();
+		this.getLstCarrera().clear();
+	}
 	
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasExternas()
 	{
 		Iterator<Carrera> itrCarrera = this.getLstCarrera().iterator();
 		Iterator<Cursada> itrCursada = this.getLstCursada().iterator();
-		Iterator<Examen> itrExamen = this.getLstExamen().iterator();
 		Iterator<Nota> itrNota = this.getLstNota().iterator();
-		
 		
 		while (itrCarrera.hasNext())
 		{
@@ -106,11 +92,6 @@ public class Alumno extends Persona {
 			Cursada cursada = itrCursada.next();
 			cursada.limpiarReferenciasCiclicasPropias();
 		}
-		while (itrExamen.hasNext())
-		{
-			Examen examen = itrExamen.next();
-			examen.limpiarReferenciasCiclicasPropias();
-		}
 		while (itrNota.hasNext())
 		{
 			Nota nota = itrNota.next();
@@ -120,8 +101,6 @@ public class Alumno extends Persona {
 
 	@Override
 	public String toString() {
-		return "Alumno [lstCarrera=" + lstCarrera + ", lstCursada=" + lstCursada + ", lstExamen=" + lstExamen + "]";
+		return "Alumno [lstCursada=" + lstCursada + ", lstNota=" + lstNota + ", lstCarrera=" + lstCarrera + "]";
 	}
-
-	
 }
