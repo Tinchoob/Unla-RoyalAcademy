@@ -360,7 +360,13 @@ Examen:
 		"cursada" : {
 			"idCursada": 1,
 			"codigo" : "8601-1",
-			"materia" : null,
+			"materia" : {
+		        "idMateria": 1,
+		        "nombre": "Programación de Computadoras",
+		        "codigo": "8601",
+		        "lstCarrera": [],
+		        "lstCursada": []
+		    },
 			"lstProfesor" : [],
 			"lstAlumno" : [],
 			"lstExamen" : []
@@ -379,6 +385,30 @@ Examen:
 				"pregunta" : "Un algoritmo de Fibonacci puede iniciarse en 0",
 				"lstExamen" : [],
 				"valorCorrecto" : false
+			},
+			{
+				"type": "datos.PreguntaMC",
+				"idPregunta": 2,
+				"pregunta": "Que hace un microprocesador?",
+				"lstExamen": [],
+				"valorCorrecto": 3,
+				"lstRespuestaMC": [
+					{
+						"idRespuestaMC": 3,
+						"respuesta": "Procesa",
+						"lstPreguntaMC": []
+					},
+					{
+						"idRespuestaMC": 1,
+						"respuesta": "Hace calculos matemáticos",
+						"lstPreguntaMC": []
+					},
+					{
+						"idRespuestaMC": 2,
+						"respuesta": "Realiza operaciones lógicas",
+						"lstPreguntaMC": []
+					}
+				]
 			}
 		]
 	}

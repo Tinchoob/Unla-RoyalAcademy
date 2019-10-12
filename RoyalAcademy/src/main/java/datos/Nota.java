@@ -59,7 +59,7 @@ public class Nota {
 
 	public void setExamen(Examen examen) {
 		this.examen = examen;
-		this.getId().setIdExamen(examen.getIdExamen());
+		if (examen != null) this.getId().setIdExamen(examen.getIdExamen());
 	}
 
 	public Alumno getAlumno() {
@@ -68,7 +68,7 @@ public class Nota {
 
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
-		this.getId().setIdPersona(alumno.getIdPersona());
+		if (alumno != null) this.getId().setIdPersona(alumno.getIdPersona());
 	}
 	
 	//Rutina para romper bucle infinito en la serialización
