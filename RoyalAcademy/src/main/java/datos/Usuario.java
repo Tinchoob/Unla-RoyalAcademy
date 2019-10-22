@@ -1,6 +1,6 @@
 package datos;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -26,7 +26,7 @@ public class Usuario extends Persona {
 	private Set<Permiso> lstPermiso;
 	
 	public Usuario(Integer idPersona, String nombre, String apellido, String numeroDocumento, String email,
-			GregorianCalendar fechaNacimiento, String genero, String celular, String pais, String ciudad,
+			LocalDate fechaNacimiento, String genero, String celular, String pais, String ciudad,
 			TipoDocumento tipoDocumento, String nombreUsuario, String contraseña, boolean activo) {
 		super(idPersona, nombre, apellido, numeroDocumento, email, fechaNacimiento, genero, celular, pais, ciudad,
 				tipoDocumento);
