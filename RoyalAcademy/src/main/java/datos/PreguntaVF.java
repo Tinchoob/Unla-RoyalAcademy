@@ -13,8 +13,8 @@ public class PreguntaVF extends Pregunta {
 
 	public PreguntaVF() {}
 	
-	public PreguntaVF(boolean valorCorrecto) {
-		super();
+	public PreguntaVF(int idPregunta, String pregunta,boolean valorCorrecto) {
+		super(idPregunta,pregunta);
 		this.valorCorrecto = valorCorrecto;
 	}
 	

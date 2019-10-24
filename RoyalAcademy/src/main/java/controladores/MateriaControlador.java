@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,28 +19,30 @@ import datos.Materia;
 import datos.Profesor;
 
 @Controller
-@RequestMapping(path="/Materia")
+@RequestMapping(path = "/Materia")
 public class MateriaControlador {
 	
+
 	@Autowired
 	private MateriaABM materiaABM;
 	
-	@PostMapping(path="/add")
-	public @ResponseBody List<Materia> alta(@RequestBody Materia[] materiaArr) {
-		List<Materia> lstMateriaAgregada = new ArrayList<Materia>();
+	@GetMapping(path = "/add")
+	public String alta() {
+
+		return "addMateria";
+	}
+	
+	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public @ResponseBody void alta(Materia materia) {
 		
-		for (Materia materia: materiaArr) {
 			try {
 				materia.setIdMateria(0);         //Para evitar que sobreescriba si se le manda algo con ID
 				materiaABM.save(materia);
-				lstMateriaAgregada.add(materia);
 			}
 			catch (Exception e){
 				e.printStackTrace();
 			}
-		}
 		
-		return lstMateriaAgregada;
 	}
 	
 	@PostMapping(path="/delete")

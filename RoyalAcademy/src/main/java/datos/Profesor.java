@@ -1,5 +1,6 @@
 package datos;
 
+import java.time.LocalDate;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Set;
@@ -19,7 +20,7 @@ public class Profesor extends Persona {
 	private Set<Cursada> lstCursada;
 
 	public Profesor(Integer idPersona, String nombre, String apellido, String numeroDocumento, String email,
-			GregorianCalendar fechaNacimiento, String genero, String celular, String pais, String ciudad,
+			LocalDate fechaNacimiento, String genero, String celular, String pais, String ciudad,
 			TipoDocumento tipoDocumento) {
 		super(idPersona, nombre, apellido, numeroDocumento, email, fechaNacimiento, genero, celular, pais, ciudad,
 				tipoDocumento);

@@ -1,5 +1,6 @@
 package datos;
 
+import java.time.LocalDate;
 import java.util.GregorianCalendar;
 
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -27,7 +30,10 @@ public class Persona {
 	private String apellido;
 	private String numeroDocumento;
 	private String email;
-	private GregorianCalendar fechaNacimiento;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate fechaNacimiento;
+	
 	private String genero;
 	private String celular;
 	private String pais;
@@ -38,7 +44,7 @@ public class Persona {
 	private TipoDocumento tipoDocumento;
 	
 	public Persona(Integer idPersona, String nombre, String apellido, String numeroDocumento, String email,
-			GregorianCalendar fechaNacimiento, String genero, String celular, String pais, String ciudad,
+			LocalDate fechaNacimiento, String genero, String celular, String pais, String ciudad,
 			TipoDocumento tipoDocumento) {
 		super();
 		this.idPersona = idPersona;
@@ -98,11 +104,11 @@ public class Persona {
 		this.email = email;
 	}
 
-	public GregorianCalendar getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(GregorianCalendar fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 

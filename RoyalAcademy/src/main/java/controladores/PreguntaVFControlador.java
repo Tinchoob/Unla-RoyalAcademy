@@ -15,98 +15,97 @@ import abm.PreguntaVFABM;
 import datos.PreguntaVF;
 
 @Controller
-@RequestMapping(path="/PreguntaVF")
+@RequestMapping(path = "/PreguntaVF")
 public class PreguntaVFControlador {
-	
+
 	@Autowired
 	private PreguntaVFABM preguntaVFABM;
 	
-	@PostMapping(path="/add")
-	public @ResponseBody List<PreguntaVF> alta(@RequestBody PreguntaVF[] preguntaVFArr) {
-		List<PreguntaVF> lstPreguntaVFAgregada = new ArrayList<PreguntaVF>();
-		
-		for (PreguntaVF preguntaVF: preguntaVFArr) {
-			try {
-				preguntaVF.setIdPregunta(0);           //Para evitar que sobreescriba si se le manda algo con ID
-				preguntaVFABM.save(preguntaVF);
-				lstPreguntaVFAgregada.add(preguntaVF);
-			}
-			catch (Exception e){
-				e.printStackTrace();
-			}
-		}
-		
-		return lstPreguntaVFAgregada;
+
+	@GetMapping(path = "/add")
+	public String alta() {
+
+		return "addPreguntaVF";
 	}
-	
-	@PostMapping(path="/delete")
+
+
+	@PostMapping(path = "/add")
+	public @ResponseBody void alta(PreguntaVF preguntaVF) {
+
+		try {
+			preguntaVF.setIdPregunta(0); // Para evitar que sobreescriba si se le manda algo con ID
+			preguntaVFABM.save(preguntaVF);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@PostMapping(path = "/delete")
 	public @ResponseBody List<PreguntaVF> baja(@RequestBody PreguntaVF[] preguntaVFArr) {
 		List<PreguntaVF> lstPreguntaVFEliminada = new ArrayList<PreguntaVF>();
-		
-		for (PreguntaVF preguntaVF: preguntaVFArr) {
+
+		for (PreguntaVF preguntaVF : preguntaVFArr) {
 			try {
 				preguntaVFABM.delete(preguntaVF);
 				lstPreguntaVFEliminada.add(preguntaVF);
-			}
-			catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return lstPreguntaVFEliminada;
 	}
-	
-	@PostMapping(path="/update")
+
+	@PostMapping(path = "/update")
 	public @ResponseBody List<PreguntaVF> modificacion(@RequestBody PreguntaVF[] preguntaVFArr) {
 		List<PreguntaVF> lstPreguntaVFActualizada = new ArrayList<PreguntaVF>();
-		
-		for (PreguntaVF preguntaVF: preguntaVFArr) {
+
+		for (PreguntaVF preguntaVF : preguntaVFArr) {
 			try {
 				preguntaVFABM.save(preguntaVF);
 				lstPreguntaVFActualizada.add(preguntaVF);
-			}
-			catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return lstPreguntaVFActualizada;
 	}
-		
-	@GetMapping(path="/read")
+
+	@GetMapping(path = "/read")
 	public @ResponseBody List<PreguntaVF> traer(@RequestBody PreguntaVF[] preguntaVFArr) {
 		List<PreguntaVF> lstPreguntaVF = new ArrayList<PreguntaVF>();
 		PreguntaVF a;
-		
-		for (PreguntaVF preguntaVF: preguntaVFArr) {
+
+		for (PreguntaVF preguntaVF : preguntaVFArr) {
 			try {
 				a = preguntaVFABM.findById(preguntaVF.getIdPregunta()).get();
 				a.limpiarReferenciasCiclicasExternas();
 				lstPreguntaVF.add(a);
-			}
-			catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return lstPreguntaVF;
 	}
-	
-	@GetMapping(path="/readAll")
+
+	@GetMapping(path = "/readAll")
 	public @ResponseBody List<PreguntaVF> traerTodo() {
 		Iterable<PreguntaVF> itrPreguntaVF = preguntaVFABM.findAll();
 		List<PreguntaVF> lstPreguntaVF = new ArrayList<PreguntaVF>();
-		
-		for (PreguntaVF preguntaVF: itrPreguntaVF) {
+
+		for (PreguntaVF preguntaVF : itrPreguntaVF) {
 			try {
 				preguntaVF.limpiarReferenciasCiclicasExternas();
 				lstPreguntaVF.add(preguntaVF);
-			}
-			catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return lstPreguntaVF;
 	}
 }
