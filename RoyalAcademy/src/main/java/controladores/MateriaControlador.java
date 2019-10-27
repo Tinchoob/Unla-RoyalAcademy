@@ -32,8 +32,8 @@ public class MateriaControlador {
 		return "addMateria";
 	}
 	
-	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public @ResponseBody void alta(Materia materia) {
+	@PostMapping(path = "/add")
+	public @ResponseBody void alta(@RequestBody Materia materia) {
 		
 			try {
 				materia.setIdMateria(0);         //Para evitar que sobreescriba si se le manda algo con ID

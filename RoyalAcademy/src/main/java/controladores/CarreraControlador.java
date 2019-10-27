@@ -30,10 +30,9 @@ public class CarreraControlador {
 		return "addCarrera";
 	}
 
-	@PostMapping(path = "/add" ,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public @ResponseBody void alta(Carrera carreraArr) {
+	@PostMapping(path = "/add")
+	public @ResponseBody void alta(@RequestBody Carrera carreraArr) {
 
-		System.out.println(carreraArr);
 		try {
 			carreraArr.setIdCarrera(0); // Para evitar que sobreescriba si se le manda algo con ID
 			carreraABM.save(carreraArr);

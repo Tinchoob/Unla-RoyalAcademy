@@ -28,7 +28,7 @@ public class TurnoControlador {
 	}
 
 	@PostMapping(path = "/add")
-	public @ResponseBody void alta(Turno turno) {
+	public @ResponseBody void alta(@RequestBody Turno turno) {
 
 		try {
 			turno.setIdTurno(0); // Para evitar que sobreescriba si se le manda algo con ID
