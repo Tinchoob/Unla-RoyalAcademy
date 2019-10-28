@@ -72,41 +72,7 @@
 		%>
 
 		<div>
-			<h3>Seleccione la cursada</h3>
-			<select class="cursada">
-				<%
-					while (resultset.next()) {
-				%>
-				<option><%=resultset.getString(2)%></option>
-				<%
-					}
-				%>
-			</select>
-			<div class="buttons-container">
-
-				<h3>Seleccione el turno</h3>
-				<select class="turno">
-					<%
-						while (resultTurno.next()) {
-					%>
-					<option><%=resultTurno.getString(2)%></option>
-					<%
-						}
-					%>
-				</select>
-			</div>
-
-			<div class="buttons-container">
-				<h3>Seleccione tipo de examen</h3>
-				<input type="radio" name="automatico" value="automatico">
-				Automatico<br> <input type="radio" name="manual" value="manual">
-				Manual<br>
-
-			</div>
-
-			<div class="buttons-container">
-				<a class="btn btn-primary" id="submit">Aceptar</a>
-			</div>
+			<h3>Examen Manual</h3>
 		</div>
 
 

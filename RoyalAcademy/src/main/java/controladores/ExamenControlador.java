@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,6 +28,24 @@ public class ExamenControlador {
 	@RequestMapping(value="/select", method=RequestMethod.GET)
 	public ModelAndView inicio(ModelMap map) {
 		return new ModelAndView("vistaExamenes",map);
+	}
+	
+	@RequestMapping(value="/manual", method=RequestMethod.GET)
+	@ResponseBody 
+	public ModelAndView manual(@RequestParam("cursada") String cursada,@RequestParam("turno") String turno,ModelMap map) {
+		map.addAttribute("cursada", cursada);
+		map.addAttribute("turno", turno);
+		System.out.println(cursada + turno);
+		return new ModelAndView("examenManual",map);
+	}
+	
+	@RequestMapping(value="/simulado", method=RequestMethod.GET)
+	@ResponseBody 
+	public ModelAndView simulado(@RequestParam("cursada") String cursada,@RequestParam("turno") String turno,ModelMap map) {
+		map.addAttribute("cursada", cursada);
+		map.addAttribute("turno", turno);
+		System.out.println(cursada + turno);
+		return new ModelAndView("examenSimulado",map);
 	}
 	
 	@PostMapping(path="/add")
