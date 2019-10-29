@@ -5,6 +5,7 @@
 	ResultSet resultset = null;
 %>
 <%
+	int index = 1;
 	ResultSet resultTurno = null;
 %>
 
@@ -23,7 +24,7 @@
 <link href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css"
 	rel="stylesheet">
 
-<link href="/css/exam-selection.css" rel="stylesheet">
+<link href="/css/manual-exam.css" rel="stylesheet">
 
 
 
@@ -65,14 +66,40 @@
 
 				Statement statement = connection.createStatement();
 
-				resultset = statement.executeQuery("select * from cursada");
-
-				Statement statement2 = connection.createStatement();
-				resultTurno = statement2.executeQuery("select * from turno");
+				resultset = statement.executeQuery("select idPregunta,pregunta from pregunta");
 		%>
 
 		<div>
-			<h3>Examen Manual</h3>
+			<h3 class="title" >Examen Manual</h3>
+
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Pregunta</th>
+						<th scope="col">Incluir</th>
+					</tr>
+				</thead>
+				<tbody id="preguntas">
+					<%
+						while (resultset.next()) {
+					%>
+					<tr class="table-row">
+						<th class="idPregunta" scope="row"><%=resultset.getString(1) %></th>
+						<td><%=resultset.getString(2)%></td>
+						<td>
+							<div class="checkbox">
+								<input type="checkbox" name="check">
+							</div>
+						</td>
+					</tr>
+					<%
+						index++;
+							}
+					%>
+
+				</tbody>
+			</table>
 		</div>
 
 
@@ -82,6 +109,10 @@
 				out.println("wrong entry" + e);
 			}
 		%>
+		
+			<div class="buttons-container">
+				<a class="btn btn-primary" id="submit">Aceptar</a>
+			</div>
 
 
 	</div>
@@ -95,11 +126,11 @@
 		<!-- /.container -->
 	</footer>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
-  
-    <!-- Custom JavaScript for this theme -->
-  <script src="/js/exam-selection.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+
+	<!-- Custom JavaScript for this theme -->
+	<script src="/js/manual-exam.js"></script>
 
 </BODY>
 </HTML>
