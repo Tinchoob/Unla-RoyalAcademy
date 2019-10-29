@@ -31,7 +31,8 @@
 </HEAD>
 
 <BODY>
-
+<input type="hidden" id="cursada" value='${cursada}'/>
+<input type="hidden" id="turno" value='${turno}'/>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 		id="mainNav">

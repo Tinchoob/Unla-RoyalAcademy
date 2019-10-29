@@ -5,8 +5,6 @@
   
   var selected = [];
   
-  
-  
   $("#submit").click(function () {
 	  
 	  $('#preguntas tr').each(function() {
@@ -16,28 +14,33 @@
 		    selected.push(id)
 		   }
 		 });
-//	  var id = $(this)
-//      .closest('.table-row') 
-//      .find('.idPregunta').html();
-//
-//	  var checked = $('.check:checked').val()
-//	  
-//	  console.log(checked)
-//	  if(!checked){
-//		  selected.push(id)
-//	  }
-//	  else{
-//		  var index = selected.indexOf(id);
-//		  if (index > -1) {
-//		    selected.splice(index, 1);
-//		  }
-//	  }
-//	 
-//	  console.log(selected)
-
+	  
+	  
+	  var dataToPost = {
+	          cursada,
+	          turno,
+	          selected
+	      };
+	  var cursada = $('#cursada').val();
+	  var turno = $('#turno').val();
+	  
+	  console.log(turno)
+	  $.ajax(
+      {
+          type: "POST",
+          data: JSON.stringify(dataToPost),
+          url: "../add",
+          contentType: 'application/json; charset=utf-8',
+          success: function (result) {
+        	    console.log("Resultado" + result)
+//        	    window.location.href = result;
+        	    } ,
+          error: function (err) {
+        	        console.log(err)
+        	        } 
+      });
   });
   
-
 
 })(jQuery); // End of use strict
 
