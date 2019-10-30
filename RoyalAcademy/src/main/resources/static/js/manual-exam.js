@@ -10,7 +10,7 @@
 	  $('#preguntas tr').each(function() {
 		    var id = $(this).find(".idPregunta").html(); 
 	
-		   if($(this).find('input[type="checkbox"]').is(':checked')){
+		 if($(this).find('input[type="checkbox"]').is(':checked')){
 		    selected.push(id)
 		   }
 		 });
@@ -33,7 +33,7 @@
           contentType: 'application/json; charset=utf-8',
           success: function (result) {
         	    console.log("Resultado" + result)
-//        	    window.location.href = result;
+// window.location.href = result;
         	    } ,
           error: function (err) {
         	        console.log(err)

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import abm.PreguntaVFABM;
@@ -20,7 +21,6 @@ public class PreguntaVFControlador {
 
 	@Autowired
 	private PreguntaVFABM preguntaVFABM;
-	
 
 	@GetMapping(path = "/add")
 	public String alta() {
@@ -28,9 +28,8 @@ public class PreguntaVFControlador {
 		return "addPreguntaVF";
 	}
 
-
-	@PostMapping(path = "/add")
-	public @ResponseBody void alta(PreguntaVF preguntaVF) {
+	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = { "application/json" })
+	public @ResponseBody void alta(@RequestBody PreguntaVF preguntaVF) {
 
 		try {
 			preguntaVF.setIdPregunta(0); // Para evitar que sobreescriba si se le manda algo con ID

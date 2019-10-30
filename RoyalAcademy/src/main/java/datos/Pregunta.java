@@ -20,8 +20,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Pregunta")
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({ @Type(value = PreguntaVF.class), @Type(value = PreguntaMC.class), })
+//@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
+//@JsonSubTypes({ @Type(value = PreguntaVF.class), @Type(value = PreguntaMC.class), })
 public abstract class Pregunta {
 	
 	@Id
