@@ -1,5 +1,7 @@
 package datos;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -7,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Nota {
@@ -24,6 +27,9 @@ public class Nota {
     @MapsId("idPersona")
     @JoinColumn(name = "idPersona")
     Alumno alumno;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "nota")
+    private Set<RespuestaExamen> lstRespuestaExamen;
 
 	public Nota(NotaKey id, int nota, Examen examen, Alumno alumno) {
 		super();
