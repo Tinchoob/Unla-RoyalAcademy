@@ -3,7 +3,7 @@
 (function($) {
   "use strict"; // Start of use strict
   
-  var selected = [];
+  var idPreguntasSeleccionadas = [];
   
   $("#submit").click(function () {
 	  
@@ -11,32 +11,33 @@
 		    var id = $(this).find(".idPregunta").html(); 
 	
 		 if($(this).find('input[type="checkbox"]').is(':checked')){
-		    selected.push(id)
+			 idPreguntasSeleccionadas.push(id)
 		   }
 		 });
 	  
+	  var idCursada = $('#cursada').val();
+	  var idTurno = $('#turno').val();
 	  
 	  var dataToPost = {
-	          cursada,
-	          turno,
-	          selected
+			  idCursada,
+			  idTurno,
+			  idPreguntasSeleccionadas
 	      };
-	  var cursada = $('#cursada').val();
-	  var turno = $('#turno').val();
+	
 	  
-	  console.log(turno)
+	  console.log(idTurno)
 	  $.ajax(
       {
           type: "POST",
           data: JSON.stringify(dataToPost),
-          url: "../add",
+          url: "add",
           contentType: 'application/json; charset=utf-8',
           success: function (result) {
         	    console.log("Resultado" + result)
-// window.location.href = result;
+        	    // window.location.href = result;
         	    } ,
           error: function (err) {
-        	        console.log(err)
+        	        console.log("Error" + err)
         	        } 
       });
   });

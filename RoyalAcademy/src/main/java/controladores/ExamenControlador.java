@@ -1,7 +1,10 @@
 package controladores;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +18,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import abm.CursadaABM;
 import abm.ExamenABM;
+import abm.PreguntaABM;
+import abm.PreguntaVFABM;
+import abm.TurnoABM;
+import datos.Cursada;
 import datos.Examen;
+import datos.ExamenDTO;
+import datos.Pregunta;
+import datos.Turno;
 
 @Controller
 @RequestMapping(path="Examen")
@@ -24,6 +35,21 @@ public class ExamenControlador {
 	
 	@Autowired
 	private ExamenABM examenABM;
+	
+	//Horrible pero solo dios puede judzgarme
+	@Autowired
+	private CursadaABM cursadaABM;
+	
+	//Este es el mas horrible de todos, movelo al js que ya hiciste
+	//la query recien, villero
+	@Autowired
+	private PreguntaVFABM preguntaABM;
+	//
+	
+	@Autowired
+	private TurnoABM turnoABM;
+	
+	//
 	
 	@RequestMapping(value="/select", method=RequestMethod.GET)
 	public ModelAndView inicio(ModelMap map) {
@@ -52,21 +78,33 @@ public class ExamenControlador {
 	}
 	
 	@PostMapping(path="/add")
-	public @ResponseBody List<Examen> alta(@RequestBody Examen[] examenArr) {
-		List<Examen> lstExamenAgregado = new ArrayList<Examen>();
+	public @ResponseBody List<Examen> alta(@RequestBody ExamenDTO examen) {
 		
-		for (Examen examen: examenArr) {
-			try {
-				examen.setIdExamen(0);         //Para evitar que sobreescriba si se le manda algo con ID
-				examenABM.save(examen);
-				lstExamenAgregado.add(examen);
-			}
-			catch (Exception excp){
-				excp.printStackTrace();
-			}
+		try {
+	
+		System.out.println(examen);
+		Cursada cursada = cursadaABM.findById(examen.getIdCursada()).get();
+		Turno turno = turnoABM.findById(examen.getIdTurno()).get();
+		
+		Set<Pregunta> lstPreguntas = new HashSet();
+		
+		for(int i=0 ; i < examen.getIdPreguntasSeleccionadas().length ; i++) {
+				lstPreguntas.add(preguntaABM.findAllById(examen.getIdPreguntasSeleccionadas()[i]));		
 		}
 		
-		return lstExamenAgregado;
+		Examen examenToSave = new Examen();
+		examenToSave.setTurno(turno);
+		examenToSave.setCursada(cursada);
+		examenToSave.setLstPregunta(lstPreguntas);
+		examenToSave.setIdExamen(0); 
+		//Para evitar que sobreescriba si se le manda algo con ID
+		
+		examenABM.save(examenToSave);
+		}
+		catch (Exception ex){
+			ex.printStackTrace();
+		}
+		return new ArrayList();
 	}
 	
 	@PostMapping(path="/delete")

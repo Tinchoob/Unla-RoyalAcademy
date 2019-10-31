@@ -26,6 +26,7 @@
       turno = $(this).children("option:selected").val();
   });
   
+  
   $("#submit").click(function(e) {
   
       var dataToPost = {
@@ -33,6 +34,7 @@
           turno
       };
       var url = null;
+      
       if(manual){
         url = "manual";
       }
@@ -41,6 +43,11 @@
       }
       
       console.log(JSON.stringify(dataToPost))
+      
+      if(turno === null || cursada === null ){
+    	  alert("Tenes que seleccionar turno y cursada")
+    	  return
+      }
       
       window.location.href = url + "?cursada=" + cursada +"&turno=" + turno;
     	  $.ajax(
