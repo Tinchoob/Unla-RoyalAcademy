@@ -43,20 +43,20 @@
       console.log(JSON.stringify(dataToPost))
       
       window.location.href = url + "?cursada=" + cursada +"&turno=" + turno;
-//    	  $.ajax(
-//    		      {
-//    		          type: "GET",
-//    		          data: JSON.stringify(dataToPost),
-//    		          url: url,
-//    		          contentType: 'application/json; charset=utf-8',
-//    		          success: function (result) {
-//    		        	    console.log("Resultado" + result)
-//    		        	    window.location.href = result;
-//    		        	    } ,
-//    		          error: function (err) {
-//    		        	        console.log(err)
-//    		        	        } 
-//    		      });
+    	  $.ajax(
+    		      {
+    		          type: "GET",
+    		          data: JSON.stringify(dataToPost),
+    		          url: url,
+    		          contentType: 'application/json; charset=utf-8',
+    		          success: function (result) {
+    		        	    console.log("Resultado" + result)
+    		        	    window.location.href = result;
+    		        	    } ,
+    		          error: function (err) {
+    		        	        console.log(err)
+    		        	        } 
+    		      });
      
   });
 

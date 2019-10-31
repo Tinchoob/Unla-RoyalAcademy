@@ -1,6 +1,11 @@
 <!DOCTYPE html>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page import="java.sql.*"%>
+<%@ taglib
+    prefix="c"
+    uri="http://java.sun.com/jsp/jstl/core" 
+%>
 <%
 	ResultSet resultset = null;
 %>
@@ -73,10 +78,11 @@
 		<div>
 			<h3>Seleccione la cursada</h3>
 			<select class="cursada">
+					<option value="">Seleccionar</option>
 				<%
 					while (resultset.next()) {
 				%>
-				<option><%=resultset.getString(2)%></option>
+				<option value="<%=resultset.getString(1)%>"><%=resultset.getString(2)%></option>
 				<%
 					}
 				%>
@@ -85,10 +91,18 @@
 
 				<h3>Seleccione el turno</h3>
 				<select class="turno">
+				
+				<option value="">Seleccionar</option>
 					<%
+					    int index = 0;
 						while (resultTurno.next()) {
 					%>
-					<option><%=resultTurno.getString(2)%></option>
+					<%-- <c:if test="${index eq 0}"> --%>
+						<option value=<%=resultTurno.getString(1)%> ><%=resultTurno.getString(2)%></option>
+				<%-- 	</c:if> --%>
+				<%-- 		<c:if test="${index > 0}">
+						<option><%=resultTurno.getString(2)%></option>
+					</c:if> --%>
 					<%
 						}
 					%>
@@ -128,11 +142,11 @@
 		<!-- /.container -->
 	</footer>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
-  
-    <!-- Custom JavaScript for this theme -->
-  <script src="/js/exam-selection.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+
+	<!-- Custom JavaScript for this theme -->
+	<script src="/js/exam-selection.js"></script>
 
 </BODY>
 </HTML>

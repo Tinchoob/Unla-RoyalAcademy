@@ -35,6 +35,9 @@ public class ExamenControlador {
 	public ModelAndView manual(@RequestParam("cursada") String cursada,@RequestParam("turno") String turno,ModelMap map) {
 		map.addAttribute("cursada", cursada);
 		map.addAttribute("turno", turno);
+		
+		//TODO : Agregar filtro de preguntas por cursada y turno
+		
 		System.out.println(cursada + turno);
 		return new ModelAndView("examenManual",map);
 	}
