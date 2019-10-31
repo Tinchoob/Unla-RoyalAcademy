@@ -1,7 +1,6 @@
 package controladores;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import abm.AreaABM;
 import datos.Area;
-import datos.Carrera;
 
 @Controller
 @RequestMapping(path="/Area")

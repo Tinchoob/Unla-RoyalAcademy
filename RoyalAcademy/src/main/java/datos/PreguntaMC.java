@@ -56,6 +56,7 @@ public class PreguntaMC extends Pregunta {
 	//Rutina para romper bucle infinito en la serialización
 	//Esta es distinta para permitir que salgan las respuestas
 	public void limpiarReferenciasCiclicasPropias(boolean mantenerRespuestas) {
+		this.setMateria(null);
 		this.getLstExamen().clear();
 		
 		if (!mantenerRespuestas) this.getLstRespuestaMC().clear();
@@ -74,6 +75,7 @@ public class PreguntaMC extends Pregunta {
 		Iterator<Examen> itrExamen = this.getLstExamen().iterator();
 		Iterator<RespuestaMC> itrRespuestaMC = this.getLstRespuestaMC().iterator();
 		
+		this.getMateria().limpiarReferenciasCiclicasPropias();
 		while (itrExamen.hasNext())
 		{
 			Examen examen = itrExamen.next();

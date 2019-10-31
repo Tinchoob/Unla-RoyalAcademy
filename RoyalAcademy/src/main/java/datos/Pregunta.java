@@ -10,24 +10,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Pregunta")
-//@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
-//@JsonSubTypes({ @Type(value = PreguntaVF.class), @Type(value = PreguntaMC.class), })
 public abstract class Pregunta {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idPregunta;
 	private String pregunta;
+	
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
+			   fetch = FetchType.EAGER)
+	@JoinColumn(name = "idMateria")
+	private Materia materia;
 	
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
 			fetch = FetchType.LAZY, mappedBy = "lstPregunta")
@@ -65,6 +66,14 @@ public abstract class Pregunta {
 		this.lstExamen = lstExamen;
 	}
 	
+	public Materia getMateria() {
+		return materia;
+	}
+
+	public void setMateria(Materia materia) {
+		this.materia = materia;
+	}
+
 	//Rutina para romper bucle infinito en la serialización
 	public abstract void limpiarReferenciasCiclicasPropias();
 	
@@ -77,6 +86,7 @@ public abstract class Pregunta {
 
 	@Override
 	public String toString() {
-		return "Pregunta [idPregunta=" + idPregunta + ", pregunta=" + pregunta + ", lstExamen=" + lstExamen + "]";
+		return "Pregunta [idPregunta=" + idPregunta + ", pregunta=" + pregunta + ", materia=" + materia + ", lstExamen="
+				+ lstExamen + "]";
 	}
 }

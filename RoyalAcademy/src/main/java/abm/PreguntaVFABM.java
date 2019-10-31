@@ -1,8 +1,5 @@
 package abm;
 
-import java.util.List;
-import java.util.Set;
-
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.Query;

@@ -29,6 +29,7 @@ public class PreguntaVF extends Pregunta {
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasPropias() {
 		this.getLstExamen().clear();
+		this.setMateria(null);
 	}
 	
 	//Rutina para romper bucle infinito en la serialización
@@ -40,6 +41,7 @@ public class PreguntaVF extends Pregunta {
 	public void limpiarReferenciasCiclicasExternas() {
 		Iterator<Examen> itrExamen = this.getLstExamen().iterator();
 
+		this.getMateria().limpiarReferenciasCiclicasPropias();
 		while (itrExamen.hasNext())
 		{
 			Examen examen = itrExamen.next();
