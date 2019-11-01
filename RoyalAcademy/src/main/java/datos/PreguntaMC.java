@@ -90,7 +90,7 @@ public class PreguntaMC extends Pregunta {
 
 	@Override
 	public String toString() {
-		return "PreguntaMC [getIdPregunta()=" + getIdPregunta() + ", getPregunta()=" + getPregunta()
-				+ ", valorCorrecto=" + valorCorrecto + ", lstRespuestaMC=" + lstRespuestaMC + "]";
+		return "PreguntaMC [getIdPregunta()=" + getIdPregunta() + ", getPregunta()=" + getPregunta() + ", isActiva()="
+				+ isActiva() + ", valorCorrecto=" + valorCorrecto + ", lstRespuestaMC=" + lstRespuestaMC + "]";
 	}
 }

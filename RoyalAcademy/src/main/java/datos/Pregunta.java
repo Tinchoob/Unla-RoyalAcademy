@@ -24,6 +24,7 @@ public abstract class Pregunta {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idPregunta;
 	private String pregunta;
+	private boolean activa;
 	
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
 			   fetch = FetchType.EAGER)
@@ -40,6 +41,7 @@ public abstract class Pregunta {
 		super();
 		this.idPregunta = idPregunta;
 		this.pregunta = pregunta;
+		this.activa = true;
 	}
 
 	public int getIdPregunta() {
@@ -52,6 +54,14 @@ public abstract class Pregunta {
 
 	public String getPregunta() {
 		return pregunta;
+	}
+	
+	public boolean isActiva() {
+		return activa;
+	}
+
+	public void setActiva(boolean activa) {
+		this.activa = activa;
 	}
 
 	public void setPregunta(String pregunta) {
@@ -86,7 +96,7 @@ public abstract class Pregunta {
 
 	@Override
 	public String toString() {
-		return "Pregunta [idPregunta=" + idPregunta + ", pregunta=" + pregunta + ", materia=" + materia + ", lstExamen="
-				+ lstExamen + "]";
+		return "Pregunta [idPregunta=" + idPregunta + ", pregunta=" + pregunta + ", activa=" + activa + ", materia="
+				+ materia + ", lstExamen=" + lstExamen + "]";
 	}
 }

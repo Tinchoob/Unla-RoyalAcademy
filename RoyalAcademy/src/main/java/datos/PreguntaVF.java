@@ -51,7 +51,7 @@ public class PreguntaVF extends Pregunta {
 	
 	@Override
 	public String toString() {
-		return "PreguntaVF [getIdPregunta()=" + getIdPregunta() + ", getPregunta()=" + getPregunta()
-				+ ", valorCorrecto=" + valorCorrecto + "]";
+		return "PreguntaVF [getIdPregunta()=" + getIdPregunta() + ", getPregunta()=" + getPregunta() + ", isActiva()="
+				+ isActiva() + ", valorCorrecto=" + valorCorrecto + "]";
 	}
 }
