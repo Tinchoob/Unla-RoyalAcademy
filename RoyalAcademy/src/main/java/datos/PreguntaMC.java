@@ -17,7 +17,7 @@ public class PreguntaMC extends Pregunta {
 	
 	private int valorCorrecto;
 	
-	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
+	@ManyToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH},
 			fetch = FetchType.LAZY)
 	@JoinTable(name = "PreguntaRespuestaMC",
 	joinColumns = { @JoinColumn(name = "idPregunta") },

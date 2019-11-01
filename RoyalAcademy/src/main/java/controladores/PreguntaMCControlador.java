@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import abm.MateriaABM;
 import abm.PreguntaMCABM;
 import datos.PreguntaMC;
+import datos.PreguntaMCDTO;
 
 @Controller
 @RequestMapping(path = "/PreguntaMC")
@@ -22,15 +25,27 @@ public class PreguntaMCControlador {
 	@Autowired
 	private PreguntaMCABM preguntaMCABM;
 	
+	@Autowired
+	private MateriaABM materiaABM;
+	
 	@GetMapping(path = "/add")
 	public String alta() {
 
 		return "addPreguntaMC";
 	}
 
-	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public @ResponseBody void alta(PreguntaMC preguntaMC) {
+	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = { "application/json" })
+	public @ResponseBody void alta(@RequestBody PreguntaMCDTO preguntaDTO) {
 
+		System.out.println(preguntaDTO);
+		
+		PreguntaMC preguntaMC = new PreguntaMC();
+		
+		preguntaMC.setActiva(preguntaDTO.isActiva());
+		preguntaMC.setLstRespuestaMC(preguntaDTO.getLstRespuestaMC());
+		preguntaMC.setPregunta(preguntaDTO.getPregunta());
+		preguntaMC.setValorCorrecto(preguntaDTO.getValorCorrecto());
+		preguntaMC.setMateria(materiaABM.findById(preguntaDTO.getIdMateria()).get());
 		try {
 			preguntaMC.setIdPregunta(0); // Para evitar que sobreescriba si se le manda algo con ID
 			preguntaMCABM.save(preguntaMC);

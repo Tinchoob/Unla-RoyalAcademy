@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import abm.MateriaABM;
 import abm.PreguntaVFABM;
 import datos.PreguntaVF;
+import datos.PreguntaVFDTO;
 
 @Controller
 @RequestMapping(path = "/PreguntaVF")
@@ -21,6 +23,9 @@ public class PreguntaVFControlador {
 
 	@Autowired
 	private PreguntaVFABM preguntaVFABM;
+	
+	@Autowired
+	private MateriaABM materiaABM;
 
 	@GetMapping(path = "/add")
 	public String alta() {
@@ -29,8 +34,14 @@ public class PreguntaVFControlador {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = { "application/json" })
-	public @ResponseBody void alta(@RequestBody PreguntaVF preguntaVF) {
+	public @ResponseBody void alta(@RequestBody PreguntaVFDTO preguntaDTO) {
 
+		PreguntaVF preguntaVF = new PreguntaVF();
+		preguntaVF.setMateria(materiaABM.findById(preguntaDTO.getIdMateria()).get());
+		preguntaVF.setPregunta(preguntaDTO.getPregunta());
+		preguntaVF.setValorCorrecto(preguntaDTO.isValorCorrecto());
+		preguntaVF.setActiva(true);
+		System.out.println(preguntaDTO);
 		try {
 			preguntaVF.setIdPregunta(0); // Para evitar que sobreescriba si se le manda algo con ID
 			preguntaVFABM.save(preguntaVF);

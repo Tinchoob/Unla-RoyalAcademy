@@ -43,6 +43,16 @@ public abstract class Pregunta {
 		this.pregunta = pregunta;
 		this.activa = true;
 	}
+	
+	
+
+	public boolean isActiva() {
+		return activa;
+	}
+
+	public void setActiva(boolean activa) {
+		this.activa = activa;
+	}
 
 	public int getIdPregunta() {
 		return idPregunta;
@@ -56,14 +66,6 @@ public abstract class Pregunta {
 		return pregunta;
 	}
 	
-	public boolean isActiva() {
-		return activa;
-	}
-
-	public void setActiva(boolean activa) {
-		this.activa = activa;
-	}
-
 	public void setPregunta(String pregunta) {
 		this.pregunta = pregunta;
 	}

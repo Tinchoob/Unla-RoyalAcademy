@@ -1,6 +1,7 @@
 (function($) {
 	"use strict"; // Start of use strict
 
+	var materia = null;
 	var selected = [];
 
 	$("#true").click(function(e) {
@@ -27,10 +28,14 @@
 
 	});
 
+	$("select.materia").change(function() {
+		materia = $(this).children("option:selected").val();
+	});
+
 	$("#submit").click(function(e) {
 
 		var pregunta = $('#pregunta').val();
-		
+
 		var trueval = $('#true:checked').val();
 		var falseval = $('#false:checked').val();
 
@@ -42,10 +47,9 @@
 
 		var dataToPost = {
 			pregunta : pregunta,
-			valorCorrecto : isTrue
+			valorCorrecto : isTrue,
+			idMateria: materia
 		};
-
-		console.log(dataToPost)
 
 		console.log(JSON.stringify(dataToPost))
 
