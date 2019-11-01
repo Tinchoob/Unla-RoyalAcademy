@@ -42,14 +42,19 @@ public class ExamenControlador {
 	
 	//Este es el mas horrible de todos, movelo al js que ya hiciste
 	//la query recien, villero
+	//Si van a hacer algo negro por lo menos preocupense porque sea rastreable en el codigo pajeros,
+	//ahí le puse un nombre que identifique que tipo de preguntaABM es 
 	@Autowired
-	private PreguntaVFABM preguntaABM;
+	private PreguntaVFABM preguntaVFABM;
 	//
 	
 	@Autowired
 	private TurnoABM turnoABM;
 	
 	//
+	
+	@Autowired
+	private PreguntaABM<Pregunta> preguntaABM;
 	
 	@RequestMapping(value="/select", method=RequestMethod.GET)
 	public ModelAndView inicio(ModelMap map) {
@@ -70,11 +75,32 @@ public class ExamenControlador {
 	
 	@RequestMapping(value="/simulado", method=RequestMethod.GET)
 	@ResponseBody 
-	public ModelAndView simulado(@RequestParam("cursada") String cursada,@RequestParam("turno") String turno,ModelMap map) {
+	public ModelAndView simulado(@RequestParam("cursada") int cursada, @RequestParam("turno") int turno, ModelMap map) {
+		int i;
+		Examen examen = new Examen();
+		Cursada cursadaObj = cursadaABM.findById(cursada).get();
+		Turno turnoObj = turnoABM.findById(turno).get();
+		List<Examen> lstExamen = new ArrayList<Examen>();
+		
 		map.addAttribute("cursada", cursada);
 		map.addAttribute("turno", turno);
 		System.out.println(cursada + turno);
-		return new ModelAndView("examenSimulado",map);
+		
+		for (i = 0; i < 2; i++) //<----------------------------- Cambiar acá para la cantidad de exámenes a generar 
+		{
+			//Tocar acá para la cantidad de preguntas a seleccionar
+			Set<Pregunta> lstPregunta = preguntaABM.traerAleatorias(cursadaObj.getMateria().getIdMateria(), 50);
+			
+			examen.setIdExamen(0);
+			examen.setCursada(cursadaObj);
+			examen.setTurno(turnoObj);
+			examen.setLstNota(null);
+			examen.setLstPregunta(lstPregunta);
+			
+			lstExamen.add(examen); //<-------------------------- Los exámenes generados se almacenan en esta lista
+		}
+		
+		return new ModelAndView("examenSimulado", map);
 	}
 	
 	@PostMapping(path="/add")
@@ -89,7 +115,7 @@ public class ExamenControlador {
 		Set<Pregunta> lstPreguntas = new HashSet();
 		
 		for(int i=0 ; i < examen.getIdPreguntasSeleccionadas().length ; i++) {
-				lstPreguntas.add(preguntaABM.findAllById(examen.getIdPreguntasSeleccionadas()[i]));		
+				lstPreguntas.add(preguntaVFABM.findAllById(examen.getIdPreguntasSeleccionadas()[i]));		
 		}
 		
 		Examen examenToSave = new Examen();
