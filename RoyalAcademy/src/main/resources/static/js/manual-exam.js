@@ -2,6 +2,7 @@
 
 (function($) {
   "use strict"; // Start of use strict
+ 
   
   var idPreguntasSeleccionadas = [];
   

@@ -34,13 +34,17 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
+			<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="Login">Ingresar</a></li>
+						href="/Login">Ingresar</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="#services">Alumnos</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#contact">Contact</a></li>
+						href="/Examen/select">Examenes</a></li>
+					<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						href="/PreguntaMC/add">Pregunta VF</a></li>
+						<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						href="/PreguntaVF/add">Pregunta MC</a></li>
 				</ul>
 			</div>
 		</div>

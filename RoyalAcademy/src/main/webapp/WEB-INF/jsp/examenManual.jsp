@@ -46,17 +46,21 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="Login">Ingresar</a></li>
+						href="/Login">Ingresar</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="#services">Alumnos</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="Examen">Examenes</a></li>
+						href="/Examen/select">Examenes</a></li>
+					<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						href="/PreguntaMC/add">Pregunta VF</a></li>
+						<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						href="/PreguntaVF/add">Pregunta MC</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
-	<div class="page-container">
+	<div>
 
 
 		<%
@@ -70,7 +74,7 @@
 				resultset = statement.executeQuery("select idPregunta,pregunta from pregunta");
 		%>
 
-		<div>
+		<div class="page-container">
 			<h3 class="title" >Examen Manual</h3>
 
 			<table class="table table-bordered">
@@ -101,6 +105,9 @@
 
 				</tbody>
 			</table>
+					<div class="buttons-container">
+				<a class="btn btn-primary" id="submit">Aceptar</a>
+			</div>
 		</div>
 
 
@@ -111,14 +118,8 @@
 			}
 		%>
 		
-			<div class="buttons-container">
-				<a class="btn btn-primary" id="submit">Aceptar</a>
-			</div>
+	
 
-
-	</div>
-
-	<!-- Footer -->
 	<footer class="py-5 bg-dark">
 		<div class="container">
 			<p class="m-0 text-center text-white">Copyright &copy; Royal
@@ -126,6 +127,11 @@
 		</div>
 		<!-- /.container -->
 	</footer>
+
+
+	</div>
+
+	<!-- Footer -->
 
 	<!-- Bootstrap core JavaScript -->
 	<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>

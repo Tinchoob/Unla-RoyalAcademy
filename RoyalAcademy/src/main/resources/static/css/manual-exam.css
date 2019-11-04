@@ -9,16 +9,14 @@ body {
 	margin-inline-start: 100px;
   width: 50%;
   border: 3px solid gray;
+    overflow: auto;
+  display:inline-block;
   padding: 10px;
+  padding-bottom: 30px;
 }
-.buttons-container{
-	padding-top:20px
-}
+
+
 footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   padding: 1rem;
   background-color: #efefef;
   text-align: center;
