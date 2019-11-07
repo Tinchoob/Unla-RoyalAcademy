@@ -40,7 +40,7 @@
             <form class="form-signin">
               <div class="form-label-group">
                 <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <label for="inputEmail">Dirección de email</label>
+                <label for="inputEmail">Direccion de email</label>
               </div>
 
               <div class="form-label-group">
@@ -55,6 +55,8 @@
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Ingresar</button>
               <hr class="my-4">
             </form>
+          
+         
             <form>
             <input type="button" class="btn btn-lg btn-primary btn-block" value="Volver a inicio" onclick="history.back()">
           </form>

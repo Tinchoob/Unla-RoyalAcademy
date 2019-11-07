@@ -47,7 +47,7 @@
   <header class="bg-primary text-white">
     <div class="container text-center">
       <h1>Bienvenido a Royal Academy!</h1>
-      <p class="lead">Educación por excelencia!</p>
+      <p class="lead">Educacion por excelencia!</p>
     </div>
   </header>
 

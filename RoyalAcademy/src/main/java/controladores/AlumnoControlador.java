@@ -21,6 +21,11 @@ public class AlumnoControlador {
 	@Autowired
 	private AlumnoABM alumnoABM;
 	
+	@GetMapping(path="/menu")
+	public String alta() {
+		return "menuAlumno";
+	}
+	
 	@PostMapping(path="/add")
 	public @ResponseBody List<Alumno> alta(@RequestBody Alumno[] alumnoArr) {
 		int result = 0;

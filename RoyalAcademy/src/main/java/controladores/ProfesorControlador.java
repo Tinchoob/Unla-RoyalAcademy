@@ -21,6 +21,12 @@ public class ProfesorControlador {
 	@Autowired
 	private ProfesorABM profesorABM;
 	
+	@GetMapping(path="/menu")
+	public String menu() {
+		return "menuAdmin";
+	
+	}
+	
 	@PostMapping(path="/add")
 	public @ResponseBody List<Profesor> alta(@RequestBody Profesor[] profesorArr) {
 		int result = 0;
