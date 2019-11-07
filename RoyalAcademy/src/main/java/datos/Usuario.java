@@ -11,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Transient;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "idPersona")
@@ -18,6 +19,9 @@ public class Usuario extends Persona {
 	private String nombreUsuario;
 	private String contraseña;
 	private boolean activo;
+	
+	@Transient
+    private String passwordConfirm;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "UsuarioPermiso",
@@ -69,6 +73,14 @@ public class Usuario extends Persona {
 		this.lstPermiso = lstPermiso;
 	}
 	
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
 	//Rutina para romper bucle infinito en la serialización
 	public void limpiarReferenciasCiclicasPropias()
 	{
