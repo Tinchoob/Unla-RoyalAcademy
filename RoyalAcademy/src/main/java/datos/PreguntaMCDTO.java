@@ -8,11 +8,11 @@ public class PreguntaMCDTO {
 	private String pregunta;
 	private int valorCorrecto;
 	private boolean activa;
-	private Set<RespuestaMC> lstRespuestaMC;
+	private List<RespuestaMC> lstRespuestaMC;
 	private int idMateria;
 	
 	
-	public PreguntaMCDTO(String pregunta, int valorCorrecto, boolean activa, Set<RespuestaMC> lstRespuestaMC,
+	public PreguntaMCDTO(String pregunta, int valorCorrecto, boolean activa, List<RespuestaMC> lstRespuestaMC,
 			int idMateria) {
 		super();
 		this.pregunta = pregunta;
@@ -57,12 +57,12 @@ public class PreguntaMCDTO {
 	}
 
 
-	public Set<RespuestaMC> getLstRespuestaMC() {
+	public List<RespuestaMC> getLstRespuestaMC() {
 		return lstRespuestaMC;
 	}
 
 
-	public void setLstRespuestaMC(Set<RespuestaMC> lstRespuestaMC) {
+	public void setLstRespuestaMC(List<RespuestaMC> lstRespuestaMC) {
 		this.lstRespuestaMC = lstRespuestaMC;
 	}
 

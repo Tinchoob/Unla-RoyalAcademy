@@ -46,6 +46,7 @@ public class PreguntaMCControlador {
 		preguntaMC.setPregunta(preguntaDTO.getPregunta());
 		preguntaMC.setValorCorrecto(preguntaDTO.getValorCorrecto());
 		preguntaMC.setMateria(materiaABM.findById(preguntaDTO.getIdMateria()).get());
+		
 		try {
 			preguntaMC.setIdPregunta(0); // Para evitar que sobreescriba si se le manda algo con ID
 			preguntaMCABM.save(preguntaMC);

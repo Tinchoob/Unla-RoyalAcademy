@@ -1,6 +1,7 @@
 package datos;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,7 +23,7 @@ public class PreguntaMC extends Pregunta {
 	@JoinTable(name = "PreguntaRespuestaMC",
 	joinColumns = { @JoinColumn(name = "idPregunta") },
 	inverseJoinColumns = { @JoinColumn(name = "idRespuestaMC") })
-	private Set<RespuestaMC> lstRespuestaMC;
+	private List<RespuestaMC> lstRespuestaMC;
 	
 	
 	public PreguntaMC() {}
@@ -40,11 +41,11 @@ public class PreguntaMC extends Pregunta {
 		this.valorCorrecto = valorCorrecto;
 	}
 
-	public Set<RespuestaMC> getLstRespuestaMC() {
+	public List<RespuestaMC> getLstRespuestaMC() {
 		return lstRespuestaMC;
 	}
 
-	public void setLstRespuestaMC(Set<RespuestaMC> lstRespuestaMC) {
+	public void setLstRespuestaMC(List<RespuestaMC> lstRespuestaMC) {
 		this.lstRespuestaMC = lstRespuestaMC;
 	}
 	

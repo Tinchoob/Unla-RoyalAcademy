@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page import="java.sql.*"%>
-<%@ taglib
-    prefix="c"
-    uri="http://java.sun.com/jsp/jstl/core" 
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	ResultSet resultset = null;
 %>
@@ -46,7 +43,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav ml-auto">
+				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="/Login">Ingresar</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
@@ -55,81 +52,46 @@
 						href="/Examen/select">Examenes</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="/PreguntaMC/add">Pregunta VF</a></li>
-						<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="/PreguntaVF/add">Pregunta MC</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-
+	<input type="hidden" id="idExamen" value="${examen.getIdExamen()}" />
+		<input type="hidden" id="documento" value="${documento}" />
 	<div class="page-container">
 
 
-		<%
-			try {
-				//Class.forName("com.mysql.jdbc.Driver").newInstance();
-				Connection connection = DriverManager
-						.getConnection("jdbc:mysql://localhost/bd_royal_academy?user=admin&password=1234");
+		<div class="preguntas-mc-container">
+			<c:forEach items="${preguntasMC}" var="item">
+				<div class="pregunta-mc-row">
+					${item.getPregunta()}<br>
+				<input type="radio" name="opcion1v${item.getIdPregunta()}" value="opcion1"> ${item.getLstRespuestaMC().get(0).getRespuesta()}<br>
+				<input type="radio" name="opcion2v${item.getIdPregunta()}" value="opcion2"> ${item.getLstRespuestaMC().get(1).getRespuesta()}<br>
+				<input type="radio" name="opcion3v${item.getIdPregunta()}" value="opcion3"> ${item.getLstRespuestaMC().get(2).getRespuesta()}<br>
+				<input type="hidden" name="idPregunta" class="idPregunta" id="idPregunta" value="${item.getIdPregunta()}" />
+				<input type="hidden" name="valorcorrecto" class="valorcorrecto" id="valorcorrecto"  />
+				</div>
+			</c:forEach>
+		</div>
 
-				Statement statement = connection.createStatement();
-
-				resultset = statement.executeQuery("select * from pregunta");
-
-		%>
-
-		<div>
-			<h3>Seleccione la cursada</h3>
-			<select class="cursada">
-					<option value="">Seleccionar</option>
-				<%
-					while (resultset.next()) {
-				%>
-				<option value="<%=resultset.getString(1)%>"><%=resultset.getString(2)%></option>
-				<%
-					}
-				%>
-			</select>
-			<div class="buttons-container">
-
-				<h3>Seleccione el turno</h3>
-				<select class="turno">
-				
-				<option value="">Seleccionar</option>
-					<%
-					    int index = 0;
-						while (resultTurno.next()) {
-					%>
-					<%-- <c:if test="${index eq 0}"> --%>
-						<option value=<%=resultTurno.getString(1)%> ><%=resultTurno.getString(2)%></option>
-				<%-- 	</c:if> --%>
-				<%-- 		<c:if test="${index > 0}">
-						<option><%=resultTurno.getString(2)%></option>
-					</c:if> --%>
-					<%
-						}
-					%>
-				</select>
-			</div>
-
-			<div class="buttons-container">
-				<h3>Ingrese su numero de documento</h3>
-				<input type="number" name="documento" id="documento" class="documento" >
-
-			</div>
-
-			<div class="buttons-container">
-				<a class="btn btn-primary" id="submit">Aceptar</a>
-			</div>
+		<div class="preguntas-vf-container">
+			<c:forEach items="${preguntasVF}" var="item">
+				<div class="pregunta-vf-row">
+					${item.getPregunta()}<br> <input type="radio" name="verdaderov${item.getIdPregunta()}"
+						value="verdadero"> Verdadero<br> <input type="radio"
+						name="falsov${item.getIdPregunta()}" value="Falso"> Falso<br>
+										<input type="hidden" name="idPregunta" class="idPregunta" id="idPregunta" value="${item.getIdPregunta()}" />
+						<input type="hidden" name="valorcorrecto" class="valorcorrecto" id="valorcorrecto" />
+				</div>
+			</c:forEach>
 		</div>
 
 
-		<%
-			//**Should I input the codes here?**
-			} catch (Exception e) {
-				out.println("wrong entry" + e);
-			}
-		%>
-
+	<div class="buttons-container">
+				<a class="btn btn-primary" id="submit">Enviar</a>
+			</div>
 
 	</div>
 
@@ -146,7 +108,7 @@
 	<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
 
 	<!-- Custom JavaScript for this theme -->
-	<script src="/js/resolve-exam-data.js"></script>
+	<script src="/js/exam-view.js"></script>
 
 </BODY>
 </HTML>
