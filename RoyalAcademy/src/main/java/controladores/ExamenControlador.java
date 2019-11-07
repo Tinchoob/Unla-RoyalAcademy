@@ -26,7 +26,10 @@ import abm.TurnoABM;
 import datos.Cursada;
 import datos.Examen;
 import datos.ExamenDTO;
+import datos.Nota;
 import datos.Pregunta;
+import datos.PreguntaMC;
+import datos.PreguntaVF;
 import datos.Turno;
 
 @Controller
@@ -59,6 +62,50 @@ public class ExamenControlador {
 	@RequestMapping(value="/select", method=RequestMethod.GET)
 	public ModelAndView inicio(ModelMap map) {
 		return new ModelAndView("vistaExamenes",map);
+	}
+	
+	@RequestMapping(value="", method=RequestMethod.GET)
+	public ModelAndView getDataToResolve(ModelMap map) {
+		return new ModelAndView("ResolveExamData",map);
+	}
+	
+	@RequestMapping(value="/resolve", method=RequestMethod.GET)
+	public ModelAndView resolver(@RequestParam("cursada") int cursada,@RequestParam("turno") int turno,@RequestParam("documento") String documento,ModelMap map) {
+		map.addAttribute("cursada", cursada);
+		map.addAttribute("turno", turno);
+		map.addAttribute("documento",documento);
+	
+		Examen examen = examenABM.getByCursadaAndTurno(cursada, turno).get(0);
+		
+		List<PreguntaMC> preguntasMC = new ArrayList();
+		List<PreguntaVF> preguntasVF = new ArrayList();
+		
+		for(Pregunta p : examen.getLstPregunta()) {
+			if(p instanceof PreguntaMC) {
+				preguntasMC.add((PreguntaMC) p);
+			}
+			else {
+				preguntasVF.add((PreguntaVF) p);
+			}
+		
+		}
+		
+		for(PreguntaMC n : preguntasMC) {
+			n.limpiarReferenciasCiclicasExternas();
+		}
+		
+		for(PreguntaVF n : preguntasVF) {
+			n.limpiarReferenciasCiclicasExternas();
+		}
+
+
+//		
+		System.out.println(preguntasMC);
+
+		map.addAttribute("preguntasVF",preguntasVF);
+		map.addAttribute("preguntasMC",preguntasMC);
+		
+		return new ModelAndView("examView",map);
 	}
 	
 	@RequestMapping(value="/manual", method=RequestMethod.GET)

@@ -12,14 +12,12 @@ import org.springframework.stereotype.Service;
 @SpringBootApplication(scanBasePackages={"controladores","datos"})
 @EnableJpaRepositories(basePackages = {"abm"})
 @EntityScan("datos")
-
-
-public class RoyalAcademyApplication extends SpringBootServletInitializer {
+public class RoyalAcademyApplication {
 	
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(RoyalAcademyApplication.class);
-	}
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//		return application.sources(RoyalAcademyApplication.class);
+//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(RoyalAcademyApplication.class, args);
