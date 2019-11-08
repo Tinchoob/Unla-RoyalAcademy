@@ -36,7 +36,7 @@ public class UsuarioControlador {
 	}
 
 	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public @ResponseBody void alta(Usuario usuario) {
+	public String alta(Usuario usuario) {
 
 		try {
 			usuario.setIdPersona(0);// Para evitar que sobreescriba si se le manda algo con ID
@@ -45,7 +45,9 @@ public class UsuarioControlador {
 			usuarioABM.save(usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "redirect:/";
 		}
+		return "redirect:/";
 	}
 
 	@PostMapping(path = "/delete")

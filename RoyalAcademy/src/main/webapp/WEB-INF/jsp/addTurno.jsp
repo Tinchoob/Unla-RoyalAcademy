@@ -43,13 +43,13 @@
 <form method="post">
 
 <div class="form-group">
-<label for="fechaHoraInicio">Fecha y hora de inicio:</label> <input type="text"
+<label for="fechaHoraInicio">Fecha y hora de inicio:</label> <input type="date"
 	class="form-control" id="fechaHoraInicio" placeholder="aaaa-mm-dd hh:mm:ss"
 	name="fechaHoraInicio">
 </div>
 
 	<div class="form-group">
-	<label for="fechaHoraFin">Fecha y hora de fin :</label> <input type="text"
+	<label for="fechaHoraFin">Fecha y hora de fin :</label> <input type="date"
 		class="form-control" id="fechaHoraFin" placeholder="aaaa-mm-dd hh:mm:ss"
 		name="fechaHoraFin">
 </div>

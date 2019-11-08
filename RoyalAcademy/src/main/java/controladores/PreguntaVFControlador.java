@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +36,7 @@ public class PreguntaVFControlador {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = { "application/json" })
-	public @ResponseBody void alta(@RequestBody PreguntaVFDTO preguntaDTO) {
+	public @ResponseBody ResponseEntity<String> alta(@RequestBody PreguntaVFDTO preguntaDTO) {
 
 		PreguntaVF preguntaVF = new PreguntaVF();
 		preguntaVF.setMateria(materiaABM.findById(preguntaDTO.getIdMateria()).get());
@@ -48,8 +50,9 @@ public class PreguntaVFControlador {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<>("Hubo un error",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
+		return new ResponseEntity<>("Pregunta almacenada correctamente",HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/delete")

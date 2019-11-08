@@ -60,10 +60,11 @@
 			contentType : 'application/json; charset=utf-8',
 			success : function(result) {
 				console.log("Resultado" + result)
-				// window.location.href = result;
+				window.location.href = "/";
 			},
 			error : function(err) {
 				console.log(err)
+				alert("error inesperado")
 			}
 		});
 

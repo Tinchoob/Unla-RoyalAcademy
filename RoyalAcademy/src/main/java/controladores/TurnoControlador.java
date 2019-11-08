@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +28,8 @@ public class TurnoControlador {
 		return "addTurno";
 	}
 
-	@PostMapping(path = "/add")
-	public @ResponseBody void alta(@RequestBody Turno turno) {
+	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public String alta(@RequestBody Turno turno) {
 
 		try {
 			turno.setIdTurno(0); // Para evitar que sobreescriba si se le manda algo con ID
@@ -37,7 +38,7 @@ public class TurnoControlador {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		return "redirect:/";
 	}
 
 	@PostMapping(path = "/delete")
