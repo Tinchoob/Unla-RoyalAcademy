@@ -28,8 +28,8 @@ public class Nota {
     @JoinColumn(name = "idPersona")
     Alumno alumno;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "nota")
-    private Set<RespuestaExamen> lstRespuestaExamen;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "nota")
+//    private Set<RespuestaExamen> lstRespuestaExamen;
 
 	public Nota(NotaKey id, int nota, Examen examen, Alumno alumno) {
 		super();

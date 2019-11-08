@@ -102,11 +102,12 @@
           url: "resolve/add",
           contentType: 'application/json; charset=utf-8',
           success: function (result) {
-        	    console.log("Resultado" + result)
-        	    // window.location.href = result;
+        	    console.log(result)
+        	    window.location = '/';
         	    } ,
           error: function (err) {
         	        console.log("Error" + err)
+        		    window.location = '/';
         	        } 
       });
   });

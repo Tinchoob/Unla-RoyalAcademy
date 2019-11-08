@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,7 @@ import datos.Examen;
 import datos.ExamenDTO;
 import datos.ExamenResueltoDTO;
 import datos.Nota;
+import datos.NotaAlumno;
 import datos.Pregunta;
 import datos.PreguntaMC;
 import datos.PreguntaVF;
@@ -88,6 +91,35 @@ public class ExamenControlador {
 		return new ModelAndView("ResolveExamData", map);
 	}
 
+	@RequestMapping(value = "/find", method = RequestMethod.GET)
+	public ModelAndView findExamenes(ModelMap map) {
+		return new ModelAndView("findExamen", map);
+	}
+	
+	@RequestMapping(value = "/examenes", method = RequestMethod.GET)
+	public ModelAndView examenes(@RequestParam("cursada") int cursada, @RequestParam("turno") int turno, ModelMap map) {
+		
+		List<NotaAlumno> notaAlumnos = new ArrayList();
+		Examen examen = examenABM.getByCursadaAndTurno(cursada, turno).get(0);
+		
+		List<Nota> notas = notaABM.geyByIdExamen(examen.getIdExamen());
+		
+		for(Nota nota : notas) {
+			nota.limpiarReferenciasCiclicasExternas();
+			NotaAlumno notaAlumno = new NotaAlumno();
+			notaAlumno.setAlumno(nota.getAlumno());
+			notaAlumno.setNota(nota.getNota());
+			notaAlumnos.add(notaAlumno);
+		}	
+	
+		map.addAttribute("notas",notaAlumnos);
+		
+		System.out.println(notaAlumnos.get(0).getPersona().getNumeroDocumento());
+		
+		return new ModelAndView("listaExamenes",map);
+	}
+
+	
 	@RequestMapping(value = "/resolve", method = RequestMethod.GET)
 	public ModelAndView resolver(@RequestParam("cursada") int cursada, @RequestParam("turno") int turno,
 			@RequestParam("documento") String documento, ModelMap map) {
@@ -132,7 +164,8 @@ public class ExamenControlador {
 	}
 
 	@RequestMapping(value = "/resolve/add", method = RequestMethod.POST)
-	public void agregarResolucion(@RequestBody ExamenResueltoDTO examenDTO) {
+	@ResponseBody
+	public ResponseEntity<String> agregarResolucion(@RequestBody ExamenResueltoDTO examenDTO) {
 		// SELECT * FROM PERSONA P inner join Alumno a on p.idPersona=a.idPersona WHERE
 		// P.numeroDocumento = 40812039
 		try {
@@ -160,14 +193,15 @@ public class ExamenControlador {
 				respuestasTotales++;
 			}
 
-			nota.setNota(respuestasTotales / respuestasCorrectas);
+			nota.setNota(respuestasCorrectas * 10 / respuestasTotales);
 
 			notaABM.save(nota);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			return new ResponseEntity<>("Error al procesar, intente nuevamente",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
+		return new ResponseEntity<>("Examen almacenado correctamente",HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/manual", method = RequestMethod.GET)
