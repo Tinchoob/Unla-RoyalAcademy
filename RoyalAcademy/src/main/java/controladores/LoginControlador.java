@@ -25,5 +25,10 @@ public class LoginControlador {
 		return "login";
 	}
 	
+	@GetMapping(path="/menu")
+	public String menu() {
+		return "menuGeneral";
+	}
+	
 
 }

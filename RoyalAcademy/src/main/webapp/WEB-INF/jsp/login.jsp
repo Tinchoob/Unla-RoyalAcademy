@@ -37,15 +37,15 @@
         <div class="card card-signin my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Ingresar al sitio</h5>
-            <form class="form-signin">
+            <form action="/Login/menu" method="get">
               <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <label for="inputEmail">Direccion de email</label>
+                <input type="nombreUsuario" id="nombreUsuario" class="form-control" placeholder="nombreUsuario" required autofocus>
+                <label for="nombreUsuario">Usuario</label>
               </div>
 
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <label for="inputPassword">Contraseña</label>
+                <input type="password" id="contraseña" class="form-control" placeholder="contraseña" required>
+                <label for="contraseña">Contraseña</label>
               </div>
 
               <div class="custom-control custom-checkbox mb-3">
