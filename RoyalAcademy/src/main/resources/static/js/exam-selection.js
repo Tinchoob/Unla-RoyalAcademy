@@ -5,9 +5,11 @@
   var cursada = null;
   var simulado = null;
   var manual = null;
+  var cantidad = null;
   
   $('input[type=radio][name=automatico]').change(function() {
 	  $('input[type=radio][name=manual]').prop('checked', false); 
+	  $('#cantidad').show();
 	  manual = null;
 	  simulado = $("input[name='automatico']:checked").val();
 	});
@@ -15,6 +17,7 @@
   $('input[type=radio][name=manual]').change(function() {
 	  $('input[type=radio][name=automatico]').prop('checked', false); 
 	  simulado = null;
+	  $('#cantidad').hide();
 	  manual = $("input[name='manual']:checked").val();
 	});
 
@@ -26,12 +29,17 @@
       turno = $(this).children("option:selected").val();
   });
   
+  $("select.cantidad-simulados").change(function(){
+      cantidad = $(this).children("option:selected").val();
+  });
+  
   
   $("#submit").click(function(e) {
   
       var dataToPost = {
           cursada,
-          turno
+          turno,
+          cantidad
       };
       var url = null;
       
@@ -49,7 +57,7 @@
     	  return
       }
       
-      window.location.href = url + "?cursada=" + cursada +"&turno=" + turno;
+      window.location.href = url + "?cursada=" + cursada +"&turno=" + turno + "&cantidad=" + cantidad ;
     	  $.ajax(
     		      {
     		          type: "GET",

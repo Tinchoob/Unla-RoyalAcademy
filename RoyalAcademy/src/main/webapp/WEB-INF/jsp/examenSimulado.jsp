@@ -72,7 +72,7 @@
 		%>
 
 		<div>
-			<h3>Examen Simulado</h3>
+			<h3>${mensaje}</h3>
 		</div>
 
 

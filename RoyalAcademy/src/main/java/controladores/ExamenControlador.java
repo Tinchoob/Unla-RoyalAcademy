@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,31 +96,30 @@ public class ExamenControlador {
 	public ModelAndView findExamenes(ModelMap map) {
 		return new ModelAndView("findExamen", map);
 	}
-	
+
 	@RequestMapping(value = "/examenes", method = RequestMethod.GET)
 	public ModelAndView examenes(@RequestParam("cursada") int cursada, @RequestParam("turno") int turno, ModelMap map) {
-		
+
 		List<NotaAlumno> notaAlumnos = new ArrayList();
-		Examen examen = examenABM.getByCursadaAndTurno(cursada, turno).get(0);
-		
-		List<Nota> notas = notaABM.geyByIdExamen(examen.getIdExamen());
-		
-		for(Nota nota : notas) {
-			nota.limpiarReferenciasCiclicasExternas();
-			NotaAlumno notaAlumno = new NotaAlumno();
-			notaAlumno.setAlumno(nota.getAlumno());
-			notaAlumno.setNota(nota.getNota());
-			notaAlumnos.add(notaAlumno);
-		}	
-	
-		map.addAttribute("notas",notaAlumnos);
-		
+		for (Examen examen : examenABM.getByCursadaAndTurno(cursada, turno)) {
+
+			List<Nota> notas = notaABM.geyByIdExamen(examen.getIdExamen());
+
+			for (Nota nota : notas) {
+				nota.limpiarReferenciasCiclicasExternas();
+				NotaAlumno notaAlumno = new NotaAlumno();
+				notaAlumno.setAlumno(nota.getAlumno());
+				notaAlumno.setNota(nota.getNota());
+				notaAlumnos.add(notaAlumno);
+			}
+		}
+		map.addAttribute("notas", notaAlumnos);
+
 		System.out.println(notaAlumnos.get(0).getPersona().getNumeroDocumento());
-		
-		return new ModelAndView("listaExamenes",map);
+
+		return new ModelAndView("listaExamenes", map);
 	}
 
-	
 	@RequestMapping(value = "/resolve", method = RequestMethod.GET)
 	public ModelAndView resolver(@RequestParam("cursada") int cursada, @RequestParam("turno") int turno,
 			@RequestParam("documento") String documento, ModelMap map) {
@@ -127,7 +127,9 @@ public class ExamenControlador {
 		map.addAttribute("turno", turno);
 		map.addAttribute("documento", documento);
 
-		Examen examen = examenABM.getByCursadaAndTurno(cursada, turno).get(0);
+		Random rand = new Random();
+		List<Examen> examenes = examenABM.getByCursadaAndTurno(cursada, turno);
+		Examen examen = examenes.get(rand.nextInt(examenes.size()));
 
 		List<PreguntaMC> preguntasMC = new ArrayList();
 		List<PreguntaVF> preguntasVF = new ArrayList();
@@ -199,9 +201,9 @@ public class ExamenControlador {
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return new ResponseEntity<>("Error al procesar, intente nuevamente",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>("Error al procesar, intente nuevamente", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>("Examen almacenado correctamente",HttpStatus.OK);
+		return new ResponseEntity<>("Examen almacenado correctamente", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/manual", method = RequestMethod.GET)
@@ -219,32 +221,44 @@ public class ExamenControlador {
 
 	@RequestMapping(value = "/simulado", method = RequestMethod.GET)
 	@ResponseBody
-	public ModelAndView simulado(@RequestParam("cursada") int cursada, @RequestParam("turno") int turno, ModelMap map) {
-		int i;
-		Examen examen = new Examen();
-		Cursada cursadaObj = cursadaABM.findById(cursada).get();
-		Turno turnoObj = turnoABM.findById(turno).get();
-		List<Examen> lstExamen = new ArrayList<Examen>();
+	public ModelAndView simulado(@RequestParam("cursada") int cursada, @RequestParam("turno") int turno,
+			@RequestParam("cantidad") int cantidad, ModelMap map) {
 
-		map.addAttribute("cursada", cursada);
-		map.addAttribute("turno", turno);
-		System.out.println(cursada + turno);
+		try {
+			Cursada cursadaObj = cursadaABM.findById(cursada).get();
+			Turno turnoObj = turnoABM.findById(turno).get();
+			List<Examen> lstExamen = new ArrayList<Examen>();
 
-		for (i = 0; i < 2; i++) // <----------------------------- Cambiar acá para la cantidad de exámenes a
-								// generar
-		{
-			// Tocar acá para la cantidad de preguntas a seleccionar
-			Set<Pregunta> lstPregunta = preguntaABM.traerAleatorias(cursadaObj.getMateria().getIdMateria(), 50);
+			map.addAttribute("cursada", cursada);
+			map.addAttribute("turno", turno);
+			System.out.println(cursada + turno);
 
-			examen.setIdExamen(0);
-			examen.setCursada(cursadaObj);
-			examen.setTurno(turnoObj);
-			examen.setLstNota(null);
-			examen.setLstPregunta(lstPregunta);
+			for (int i = 0; i <= cantidad; i++) // <----------------------------- Cambiar acá para la cantidad de
+												// exámenes a
+			// generar
+			{
+				Examen examen = new Examen();
+				// Tocar acá para la cantidad de preguntas a seleccionar
+				List<Pregunta> lstPregunta = preguntaABM.traerAleatorias(cursadaObj.getMateria().getIdMateria());
 
-			lstExamen.add(examen); // <-------------------------- Los exámenes generados se almacenan en esta lista
+				if (!lstPregunta.isEmpty()) {
+					examen.setIdExamen(0);
+					examen.setCursada(cursadaObj);
+					examen.setTurno(turnoObj);
+					examen.setLstNota(null);
+					examen.setLstPregunta(new HashSet(lstPregunta));
+
+					lstExamen.add(examen);
+					examenABM.save(examen);
+				}
+				// <-------------------------- Los exámenes generados se almacenan en esta lista
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.addAttribute("mensaje", "Hubo un error en la creación, intenta devuelta");
+			return new ModelAndView("examenSimulado", map);
 		}
-
+		map.addAttribute("mensaje", "Se agregaron los examenes simulados exitosamente, apareceran para ser utilizados");
 		return new ModelAndView("examenSimulado", map);
 	}
 

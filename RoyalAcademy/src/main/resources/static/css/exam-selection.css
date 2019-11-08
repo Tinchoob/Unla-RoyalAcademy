@@ -12,6 +12,12 @@ margin: auto;
 .buttons-container{
 	padding-top:20px
 }
+.cantidad {
+	padding-top:20px
+}
+.cantidad-container{
+	display: inline-block;
+}
 footer {
   position: absolute;
   right: 0;

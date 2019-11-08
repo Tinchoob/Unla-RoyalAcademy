@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page import="java.sql.*"%>
-<%@ taglib
-    prefix="c"
-    uri="http://java.sun.com/jsp/jstl/core" 
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	ResultSet resultset = null;
 %>
@@ -46,7 +43,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav ml-auto">
+				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="/Login">Ingresar</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
@@ -55,7 +52,7 @@
 						href="/Examen/select">Examenes</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="/PreguntaMC/add">Pregunta VF</a></li>
-						<li class="nav-item"><a class="nav-link js-scroll-trigger"
+					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="/PreguntaVF/add">Pregunta MC</a></li>
 				</ul>
 			</div>
@@ -82,7 +79,7 @@
 		<div>
 			<h3>Seleccione la cursada</h3>
 			<select class="cursada">
-					<option value="">Seleccionar</option>
+				<option value="">Seleccionar</option>
 				<%
 					while (resultset.next()) {
 				%>
@@ -95,16 +92,16 @@
 
 				<h3>Seleccione el turno</h3>
 				<select class="turno">
-				
-				<option value="">Seleccionar</option>
+
+					<option value="">Seleccionar</option>
 					<%
-					    int index = 0;
-						while (resultTurno.next()) {
+						int index = 0;
+							while (resultTurno.next()) {
 					%>
 					<%-- <c:if test="${index eq 0}"> --%>
-						<option value=<%=resultTurno.getString(1)%> ><%=resultTurno.getString(2)%></option>
-				<%-- 	</c:if> --%>
-				<%-- 		<c:if test="${index > 0}">
+					<option value=<%=resultTurno.getString(1)%>><%=resultTurno.getString(2)%></option>
+					<%-- 	</c:if> --%>
+					<%-- 		<c:if test="${index > 0}">
 						<option><%=resultTurno.getString(2)%></option>
 					</c:if> --%>
 					<%
@@ -119,6 +116,17 @@
 				Automatico<br> <input type="radio" name="manual" value="manual">
 				Manual<br>
 
+			</div>
+
+			<div id="cantidad" class="cantidad" style="display: none;">
+				<div id="cantidad-container">
+					Cantidad de simulados <select class="cantidad-simulados">
+					    <option>Seleccionar</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+				</div>
 			</div>
 
 			<div class="buttons-container">
